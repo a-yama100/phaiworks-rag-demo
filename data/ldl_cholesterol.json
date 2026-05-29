@@ -1,0 +1,28 @@
+{
+  "biomarker_name": "LDL Cholesterol",
+  "aliases": ["LDL-C", "low-density lipoprotein cholesterol", "bad cholesterol"],
+  "category": "lipid",
+  "keywords": ["cholesterol", "heart disease", "cardiovascular risk", "statins"],
+  "summary": "LDL cholesterol carries cholesterol to the body's tissues. High levels can build up in artery walls and raise the risk of heart attack and stroke, which is why it is often called 'bad' cholesterol.",
+  "what_it_measures": "The concentration of cholesterol carried by low-density lipoprotein particles in the blood, reported in mmol/L.",
+  "reference_ranges": [
+    {"low": null, "high": 3.0, "unit": "mmol/L", "sex": "any", "note": "general adult target; lower targets apply for high cardiovascular risk"}
+  ],
+  "interpretations": [
+    {
+      "direction": "high",
+      "meaning": "A raised LDL increases the risk of fatty deposits in the arteries (atherosclerosis) and cardiovascular disease over time.",
+      "common_causes": ["diet high in saturated fat", "genetics (familial hypercholesterolaemia)", "low physical activity", "underactive thyroid"],
+      "typical_next_steps": ["cardiovascular risk assessment", "dietary and lifestyle changes", "consider statin therapy with GP"]
+    }
+  ],
+  "when_to_seek_help": "Discuss results with your GP if your LDL is persistently above target, especially if you have other risk factors such as high blood pressure, smoking, diabetes or a family history of early heart disease.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-LDL-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-05-01",
+  "last_updated": "2026-05-01",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

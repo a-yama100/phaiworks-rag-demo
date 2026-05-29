@@ -1,0 +1,35 @@
+{
+  "biomarker_name": "Ferritin",
+  "aliases": ["serum ferritin", "iron stores"],
+  "category": "haematology",
+  "keywords": ["iron", "anaemia", "iron deficiency", "tiredness", "fatigue"],
+  "summary": "Ferritin is a protein that stores iron in the body. Measuring it is the best single way to assess whether your iron stores are low (a common cause of tiredness) or high.",
+  "what_it_measures": "The amount of stored iron in the body, measured as the ferritin protein concentration in blood, reported in ug/L (equivalent to ng/mL).",
+  "reference_ranges": [
+    {"low": 30, "high": 400, "unit": "ug/L", "sex": "male", "note": "adult men"},
+    {"low": 15, "high": 150, "unit": "ug/L", "sex": "female", "note": "pre-menopausal women"}
+  ],
+  "interpretations": [
+    {
+      "direction": "low",
+      "meaning": "A low ferritin means depleted iron stores and is the most common cause of iron-deficiency anaemia, often presenting as fatigue, breathlessness or pale skin.",
+      "common_causes": ["heavy periods", "low dietary iron", "blood loss", "pregnancy", "malabsorption"],
+      "typical_next_steps": ["iron-rich diet or supplements", "investigate source of blood loss", "GP review"]
+    },
+    {
+      "direction": "high",
+      "meaning": "A high ferritin can reflect iron overload, but ferritin also rises with inflammation or infection, so it is interpreted alongside other tests.",
+      "common_causes": ["inflammation or infection", "haemochromatosis", "liver disease", "high alcohol intake"],
+      "typical_next_steps": ["transferrin saturation test", "repeat once well", "GP review"]
+    }
+  ],
+  "when_to_seek_help": "See your GP if your ferritin is low and you feel persistently tired, or if it is high, as further tests may be needed to find the cause.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-FERR-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-05-01",
+  "last_updated": "2026-05-01",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

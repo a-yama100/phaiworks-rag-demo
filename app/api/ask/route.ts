@@ -1,13 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getOpenAI, getIndex } from "@/lib/clients";
+import { getNamespace } from "@/lib/clients";
 import { rateLimit } from "@/lib/ratelimit";
-import {
-  CATEGORIES,
-  EMBED_MODEL,
-  MAX_QUESTION_LEN,
-  MIN_SCORE,
-  TOP_K,
-} from "@/lib/config";
+import { CATEGORIES, MAX_QUESTION_LEN, MIN_SCORE, TOP_K } from "@/lib/config";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -58,36 +52,34 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const openai = getOpenAI();
-    const emb = await openai.embeddings.create({
-      model: EMBED_MODEL,
-      input: question,
-    });
-    const vector = emb.data[0].embedding;
-
+    // Hard metadata filter is applied BEFORE similarity, so unapproved, non-UK, or
+    // off-category content can never surface — the anti-hallucination guarantee.
     const filter: Record<string, unknown> = {
       status: { $eq: "clinically_approved" },
       language: { $eq: "en-GB" },
     };
     if (category) filter.category = { $eq: category };
 
-    const index = getIndex();
-    const res = await index.query({
-      vector,
-      topK: TOP_K,
-      includeMetadata: true,
-      filter,
+    // Pinecone embeds `question` with the index's hosted model and runs the search.
+    const ns = getNamespace();
+    const res = await ns.searchRecords({
+      query: { topK: TOP_K, inputs: { text: question }, filter },
+      fields: ["biomarker_name", "category", "source_brief_id", "answer_text"],
     });
 
-    const matches: Match[] = (res.matches ?? [])
-      .filter((m) => (m.score ?? 0) >= MIN_SCORE)
-      .map((m) => ({
-        biomarker: String(m.metadata?.biomarker_name ?? ""),
-        category: String(m.metadata?.category ?? ""),
-        source: String(m.metadata?.source_brief_id ?? ""),
-        score: Number((m.score ?? 0).toFixed(3)),
-        answer: String(m.metadata?.answer_text ?? ""),
-      }));
+    const hits = res.result?.hits ?? [];
+    const matches: Match[] = hits
+      .filter((h) => (h._score ?? 0) >= MIN_SCORE)
+      .map((h) => {
+        const f = (h.fields ?? {}) as Record<string, unknown>;
+        return {
+          biomarker: String(f.biomarker_name ?? ""),
+          category: String(f.category ?? ""),
+          source: String(f.source_brief_id ?? ""),
+          score: Number((h._score ?? 0).toFixed(3)),
+          answer: String(f.answer_text ?? ""),
+        };
+      });
 
     return NextResponse.json({
       question,

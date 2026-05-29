@@ -67,9 +67,9 @@ export default function Home() {
         </h1>
         <p className="mt-3 text-slate-600 max-w-2xl mx-auto">
           A live retrieval pipeline over clinically-structured biomarker briefs.
-          Your question is embedded with OpenAI, then matched against a Pinecone
-          index behind a hard metadata filter. Answers are returned verbatim from
-          approved entries — no language model generates them.
+          Your question is embedded by Pinecone&apos;s hosted model, then matched
+          against the index behind a hard metadata filter. Answers are returned
+          verbatim from approved entries — no language model generates them.
         </p>
       </section>
 
@@ -194,8 +194,9 @@ export default function Home() {
           ))}
         </ul>
         <p className="mt-6 text-sm text-slate-500">
-          Stack: Next.js · OpenAI <code>text-embedding-3-small</code> · Pinecone
-          (serverless, cosine).
+          Stack: Next.js · Pinecone serverless with integrated inference
+          (<code>llama-text-embed-v2</code>, cosine) — embeddings hosted, no
+          third-party LLM key on the public endpoint.
         </p>
       </section>
     </div>

@@ -1,21 +1,16 @@
-import OpenAI from "openai";
 import { Pinecone } from "@pinecone-database/pinecone";
-import { PINECONE_INDEX } from "@/lib/config";
+import { PINECONE_INDEX, PINECONE_NAMESPACE } from "@/lib/config";
 
-let _openai: OpenAI | null = null;
-let _index: ReturnType<Pinecone["index"]> | null = null;
+let _pc: Pinecone | null = null;
 
-export function getOpenAI(): OpenAI {
-  if (!_openai) {
-    _openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+export function getPinecone(): Pinecone {
+  if (!_pc) {
+    _pc = new Pinecone({ apiKey: process.env.PINECONE_API_KEY ?? "" });
   }
-  return _openai;
+  return _pc;
 }
 
-export function getIndex(): ReturnType<Pinecone["index"]> {
-  if (!_index) {
-    const pc = new Pinecone({ apiKey: process.env.PINECONE_API_KEY ?? "" });
-    _index = pc.index(PINECONE_INDEX);
-  }
-  return _index;
+// Namespace-scoped index handle for integrated-inference search (text in, hits out).
+export function getNamespace() {
+  return getPinecone().index(PINECONE_INDEX).namespace(PINECONE_NAMESPACE);
 }

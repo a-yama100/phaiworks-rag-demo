@@ -1,0 +1,29 @@
+{
+  "biomarker_name": "HbA1c",
+  "aliases": ["glycated haemoglobin", "A1c", "haemoglobin A1c"],
+  "category": "metabolic",
+  "keywords": ["diabetes", "prediabetes", "blood sugar", "glucose control"],
+  "summary": "HbA1c reflects your average blood glucose over roughly the past 8-12 weeks. It is the standard test used to diagnose and monitor diabetes because it is not affected by what you ate that morning.",
+  "what_it_measures": "The percentage of haemoglobin in red blood cells that has glucose attached to it, reported in the UK in mmol/mol (and sometimes as a percentage).",
+  "reference_ranges": [
+    {"low": 20, "high": 41, "unit": "mmol/mol", "sex": "any", "note": "normal / non-diabetic"},
+    {"low": 4.0, "high": 5.9, "unit": "%", "sex": "any", "note": "normal / non-diabetic"}
+  ],
+  "interpretations": [
+    {
+      "direction": "high",
+      "meaning": "A raised HbA1c indicates higher average blood glucose. 42-47 mmol/mol suggests prediabetes; 48 mmol/mol (6.5%) or above is consistent with diabetes.",
+      "common_causes": ["type 2 diabetes", "prediabetes", "poorly controlled diabetes"],
+      "typical_next_steps": ["confirmatory repeat test", "lifestyle review", "GP referral"]
+    }
+  ],
+  "when_to_seek_help": "If your HbA1c is 48 mmol/mol or higher, or you have symptoms such as excessive thirst, frequent urination or unexplained weight loss, contact your GP.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-HBA1C-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-05-01",
+  "last_updated": "2026-05-01",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

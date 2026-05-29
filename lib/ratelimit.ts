@@ -1,6 +1,6 @@
 // Best-effort in-memory rate limit. On serverless this is per-instance, not global,
-// so treat it as a courtesy throttle. The real spend backstop is a hard budget cap on
-// the OpenAI key (see .env.example). Retrieval is embeddings-only, so cost is tiny.
+// so treat it as a courtesy throttle against casual abuse. Retrieval is embeddings-only
+// (Pinecone hosts the model), so cost per query is a fraction of a cent.
 
 const WINDOW_MS = 60_000;
 const MAX_PER_MINUTE = 8;

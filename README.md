@@ -9,17 +9,22 @@ and is not named after, or affiliated with, any client or product.
 
 ## What it does
 
-- User asks a question → embedded with OpenAI `text-embedding-3-small`.
+- User asks a question → **Pinecone integrated inference** embeds it server-side
+  with the index's hosted model (`llama-text-embed-v2`).
 - Pinecone query with a **hard metadata filter** (`status=clinically_approved`,
   `language=en-GB`, optional `category`) before vector similarity.
 - Returns the **verbatim approved `answer_text`** from matching entries. No LLM
   generates the response, so it cannot invent medical claims.
 - Matches below `MIN_SCORE` are dropped → the assistant declines instead of guessing.
 
+## Why no OpenAI key
+
+Embeddings are produced by Pinecone's hosted model (integrated inference), at both
+ingest and query time. The public endpoint therefore needs **only a Pinecone key** —
+there is no OpenAI key to leak, budget-cap, or rotate.
+
 ## Security / cost model (read before going public)
 
-- **Use a dedicated OpenAI key with a hard monthly budget cap** for this public
-  endpoint — not your main key. Set the cap in the OpenAI dashboard.
 - Retrieval is **embeddings-only** (no chat/generation), so cost per query is a
   fraction of a cent.
 - Per-IP rate limiting is in `lib/ratelimit.ts` (best-effort; per-instance on
@@ -32,30 +37,25 @@ Copy `.env.example` to `.env.local` (local) or set in Vercel project settings:
 
 | Var | Notes |
 |---|---|
-| `OPENAI_API_KEY` | Dedicated, budget-capped key |
-| `PINECONE_API_KEY` | |
-| `PINECONE_INDEX` | Must already be populated (default `clinical-kb-demo`) |
-| `MIN_SCORE` | Cosine threshold, default `0.33` |
+| `PINECONE_API_KEY` | The only secret this app needs |
+| `PINECONE_INDEX` | Integrated-inference index (default `clinical-kb`); created by `npm run ingest` |
+| `MIN_SCORE` | Similarity threshold below which results are dropped (default `0.05`) |
 
 ## Populate the index
 
-This app is read-only; it does not ingest. Populate the index from the Python
-ingestion project (`D:\作業用\vera-rag-demo`) into a neutrally-named index:
+Ingest is self-contained — it lives in this project and also uses integrated
+inference (no OpenAI). It creates the index if it doesn't exist, then upserts the
+briefs in `data/*.json`:
 
 ```powershell
-cd D:\作業用\vera-rag-demo
-.venv\Scripts\activate
-$env:PINECONE_INDEX = "clinical-kb-demo"
-python ingest.py
+npm run ingest     # reads .env.local for PINECONE_API_KEY
 ```
-
-(You can delete the older `vera-knowledge` index in the Pinecone console once this
-neutrally-named one is populated.)
 
 ## Local dev
 
 ```powershell
 npm install
+npm run ingest     # one-time: create + populate the index
 npm run dev        # http://localhost:3000
 ```
 
@@ -74,7 +74,9 @@ npm run dev        # http://localhost:3000
 | Path | Role |
 |---|---|
 | `app/page.tsx` | Demo UI (search, examples, results, engineering notes) |
-| `app/api/ask/route.ts` | Read-only retrieval endpoint (validate → embed → filtered query) |
-| `lib/clients.ts` | OpenAI + Pinecone singletons |
+| `app/api/ask/route.ts` | Read-only retrieval endpoint (validate → filtered text search) |
+| `scripts/ingest.mjs` | One-time ingest: create index + upsert `data/*.json` (integrated inference) |
+| `data/*.json` | The 5 clinically-structured biomarker briefs |
+| `lib/clients.ts` | Pinecone singleton + namespace handle |
 | `lib/ratelimit.ts` | Best-effort per-IP throttle |
-| `lib/config.ts` | Categories, thresholds, model name |
+| `lib/config.ts` | Categories, thresholds, model + index names |

@@ -1,0 +1,30 @@
+{
+  "biomarker_name": "Vitamin D",
+  "aliases": ["25-hydroxyvitamin D", "25(OH)D", "vitamin D3"],
+  "category": "vitamin_mineral",
+  "keywords": ["vitamin d", "bone health", "deficiency", "sunlight", "supplement"],
+  "summary": "Vitamin D helps the body absorb calcium and keeps bones, teeth and muscles healthy. Levels are commonly low in the UK during winter because the main source is sunlight on the skin.",
+  "what_it_measures": "The blood concentration of 25-hydroxyvitamin D, the storage form used to assess vitamin D status, reported in nmol/L.",
+  "reference_ranges": [
+    {"low": 50, "high": null, "unit": "nmol/L", "sex": "any", "note": "sufficient"},
+    {"low": 25, "high": 49, "unit": "nmol/L", "sex": "any", "note": "insufficient"},
+    {"low": null, "high": 24, "unit": "nmol/L", "sex": "any", "note": "deficient"}
+  ],
+  "interpretations": [
+    {
+      "direction": "low",
+      "meaning": "A low vitamin D level can lead to weakened bones, muscle aches and, if severe and prolonged, conditions such as rickets in children or osteomalacia in adults.",
+      "common_causes": ["limited sun exposure", "darker skin", "covering skin", "malabsorption", "winter months"],
+      "typical_next_steps": ["vitamin D supplementation", "increased safe sun exposure", "GP review if very low"]
+    }
+  ],
+  "when_to_seek_help": "Speak to your GP or pharmacist if your level is below 25 nmol/L, or if you have bone pain or muscle weakness, as a higher treatment dose may be needed.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-VITD-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-05-01",
+  "last_updated": "2026-05-01",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}
