@@ -148,7 +148,7 @@ export default function Home() {
               key={m.source + i}
               className="mb-4 rounded-xl border border-slate-200 bg-white p-5 shadow-sm"
             >
-              <div className="flex items-center justify-between gap-3 border-b border-slate-100 pb-3">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-3">
                 <div className="flex items-center gap-2">
                   <span className="font-semibold text-slate-900">
                     {m.biomarker}
@@ -159,10 +159,10 @@ export default function Home() {
                 </div>
                 <div className="flex items-center gap-3 text-xs text-slate-400">
                   <span>score {m.score}</span>
-                  <span className="font-mono">{m.source}</span>
+                  <span className="font-mono break-all">{m.source}</span>
                 </div>
               </div>
-              <pre className="mt-3 whitespace-pre-wrap font-sans text-sm leading-relaxed text-slate-700">
+              <pre className="mt-3 whitespace-pre-wrap break-words font-sans text-sm leading-relaxed text-slate-700">
                 {m.answer}
               </pre>
             </div>
