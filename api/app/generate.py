@@ -92,6 +92,18 @@ def format_context(hits: list[Hit]) -> str:
     return "\n\n".join(blocks)
 
 
+def build_chain():
+    """
+    Separated so tests can substitute the model without a key. The citation check is the
+    security-relevant part of this module, and a check that is only exercised against a
+    live API is a check that never runs in CI.
+    """
+    prompt = ChatPromptTemplate.from_messages(
+        [("system", SYSTEM_PROMPT), ("human", "{question}")]
+    )
+    return prompt | get_chat_model().with_structured_output(GroundedAnswer, include_raw=True)
+
+
 def generate(question: str, hits: list[Hit]) -> GenerationResult:
     if not hits:
         return GenerationResult(
@@ -99,11 +111,7 @@ def generate(question: str, hits: list[Hit]) -> GenerationResult:
             refusal_reason="no_evidence",
         )
 
-    chain = ChatPromptTemplate.from_messages(
-        [("system", SYSTEM_PROMPT), ("human", "{question}")]
-    ) | get_chat_model().with_structured_output(GroundedAnswer, include_raw=True)
-
-    raw = chain.invoke({"context": format_context(hits), "question": question})
+    raw = build_chain().invoke({"context": format_context(hits), "question": question})
     parsed: GroundedAnswer | None = raw.get("parsed")
     usage = getattr(raw.get("raw"), "usage_metadata", None) or {}
     tokens = {

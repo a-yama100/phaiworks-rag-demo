@@ -22,6 +22,9 @@ yarn-error.log*
 
 # env files
 .env*
+# ...but the templates must be in the repo: the README tells you to copy them.
+!.env.example
+!**/.env.example
 
 # vercel
 .vercel
