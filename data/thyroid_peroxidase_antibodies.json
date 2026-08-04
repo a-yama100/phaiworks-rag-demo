@@ -1,0 +1,49 @@
+{
+  "biomarker_name": "Thyroid Peroxidase Antibodies",
+  "aliases": [
+    "TPO antibodies",
+    "anti-TPO",
+    "thyroid antibodies"
+  ],
+  "category": "thyroid",
+  "keywords": [
+    "thyroid",
+    "autoimmune",
+    "Hashimoto",
+    "underactive thyroid"
+  ],
+  "summary": "TPO antibodies are made when the immune system targets an enzyme in the thyroid. Their presence explains why a thyroid is failing, rather than measuring how well it is currently working.",
+  "what_it_measures": "The concentration of autoantibodies against thyroid peroxidase, reported in IU/mL.",
+  "reference_ranges": [
+    {
+      "high": 34.0,
+      "unit": "IU/mL",
+      "sex": "any",
+      "note": "negative"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "high",
+      "meaning": "Positive TPO antibodies indicate autoimmune thyroid disease. They raise the chance of developing an underactive thyroid over time, but on their own they do not mean treatment is needed now.",
+      "common_causes": [
+        "Hashimoto's thyroiditis",
+        "Graves' disease",
+        "postpartum thyroiditis"
+      ],
+      "typical_next_steps": [
+        "monitor TSH periodically",
+        "no treatment if thyroid function is normal"
+      ]
+    }
+  ],
+  "when_to_seek_help": "Positive antibodies with normal thyroid function usually mean monitoring rather than treatment. Discuss a monitoring interval with your GP.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-THYROID-PEROXIDASE-ANTIBODIES-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

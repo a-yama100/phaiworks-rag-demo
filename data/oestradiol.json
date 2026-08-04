@@ -1,0 +1,70 @@
+{
+  "biomarker_name": "Oestradiol",
+  "aliases": [
+    "estradiol",
+    "E2",
+    "oestrogen"
+  ],
+  "category": "hormone",
+  "keywords": [
+    "periods",
+    "menopause",
+    "fertility",
+    "hormone"
+  ],
+  "summary": "Oestradiol is the main oestrogen. In women of reproductive age it changes dramatically across the menstrual cycle, so a result cannot be read without knowing which day of the cycle the sample came from.",
+  "what_it_measures": "The concentration of oestradiol in blood, reported in pmol/L.",
+  "reference_ranges": [
+    {
+      "low": 114.0,
+      "high": 332.0,
+      "unit": "pmol/L",
+      "sex": "female",
+      "note": "early follicular phase, days 2-5"
+    },
+    {
+      "high": 160.0,
+      "unit": "pmol/L",
+      "sex": "male"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "low",
+      "meaning": "A low oestradiol with a raised FSH is the usual pattern around menopause. In younger women it may point to reduced ovarian function.",
+      "common_causes": [
+        "menopause",
+        "primary ovarian insufficiency",
+        "low body weight",
+        "excessive exercise"
+      ],
+      "typical_next_steps": [
+        "FSH and LH",
+        "cycle day documentation",
+        "gynaecology referral if young"
+      ]
+    },
+    {
+      "direction": "high",
+      "meaning": "A raised oestradiol may simply reflect the mid-cycle surge, or ovarian stimulation treatment.",
+      "common_causes": [
+        "mid-cycle surge",
+        "fertility treatment",
+        "ovarian cysts"
+      ],
+      "typical_next_steps": [
+        "repeat on days 2-5 of the cycle",
+        "pelvic ultrasound"
+      ]
+    }
+  ],
+  "when_to_seek_help": "Oestradiol results are meaningless without the cycle day. Menopause is usually diagnosed clinically in women over 45 rather than by blood tests.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-OESTRADIOL-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

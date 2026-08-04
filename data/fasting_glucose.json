@@ -1,0 +1,66 @@
+{
+  "biomarker_name": "Fasting Glucose",
+  "aliases": [
+    "fasting blood glucose",
+    "FBG",
+    "fasting blood sugar"
+  ],
+  "category": "metabolic",
+  "keywords": [
+    "diabetes",
+    "prediabetes",
+    "blood sugar",
+    "fasting"
+  ],
+  "summary": "Fasting glucose is the amount of sugar in your blood after not eating for at least eight hours. It is a snapshot of a single moment, which is why it is usually read alongside HbA1c rather than on its own.",
+  "what_it_measures": "The concentration of glucose in blood plasma after an overnight fast, reported in mmol/L.",
+  "reference_ranges": [
+    {
+      "low": 3.9,
+      "high": 5.5,
+      "unit": "mmol/L",
+      "sex": "any",
+      "note": "normal, fasting at least 8 hours"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "high",
+      "meaning": "A raised fasting glucose suggests your body is not clearing sugar from the blood efficiently. 5.6-6.9 mmol/L suggests impaired fasting glucose; 7.0 mmol/L or above on two occasions is consistent with diabetes.",
+      "common_causes": [
+        "type 2 diabetes",
+        "prediabetes",
+        "acute illness or stress",
+        "some steroid medicines"
+      ],
+      "typical_next_steps": [
+        "repeat fasting sample",
+        "HbA1c for a longer-term picture",
+        "GP review"
+      ]
+    },
+    {
+      "direction": "low",
+      "meaning": "A low fasting glucose means blood sugar has fallen further than expected. In people not on diabetes medication this is uncommon and usually needs explaining.",
+      "common_causes": [
+        "missed meals",
+        "insulin or sulfonylurea treatment",
+        "excess alcohol"
+      ],
+      "typical_next_steps": [
+        "confirm with a repeat sample",
+        "medication review",
+        "GP review"
+      ]
+    }
+  ],
+  "when_to_seek_help": "If your fasting glucose is 7.0 mmol/L or above, or you feel shaky, sweaty or confused when you have not eaten, contact your GP.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-FASTING-GLUCOSE-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

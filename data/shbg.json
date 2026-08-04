@@ -1,0 +1,69 @@
+{
+  "biomarker_name": "SHBG",
+  "aliases": [
+    "sex hormone binding globulin"
+  ],
+  "category": "hormone",
+  "keywords": [
+    "testosterone",
+    "PCOS",
+    "hormone",
+    "libido"
+  ],
+  "summary": "SHBG is the protein that carries sex hormones in the blood, and only the unbound fraction is active. It is measured with testosterone because a change in SHBG shifts total testosterone without changing how much is actually available.",
+  "what_it_measures": "The concentration of sex hormone binding globulin in blood, reported in nmol/L.",
+  "reference_ranges": [
+    {
+      "low": 18.3,
+      "high": 54.1,
+      "unit": "nmol/L",
+      "sex": "male"
+    },
+    {
+      "low": 32.4,
+      "high": 128.0,
+      "unit": "nmol/L",
+      "sex": "female"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "low",
+      "meaning": "A low SHBG means more of the measured testosterone is free and active, so a total testosterone at the low end may still be adequate. Low SHBG travels with insulin resistance.",
+      "common_causes": [
+        "insulin resistance",
+        "obesity",
+        "polycystic ovary syndrome",
+        "hypothyroidism"
+      ],
+      "typical_next_steps": [
+        "calculate free testosterone",
+        "HbA1c",
+        "metabolic review"
+      ]
+    },
+    {
+      "direction": "high",
+      "meaning": "A high SHBG binds more testosterone, so a normal total testosterone may leave less free hormone available than the number suggests.",
+      "common_causes": [
+        "hyperthyroidism",
+        "liver disease",
+        "oestrogen therapy",
+        "ageing"
+      ],
+      "typical_next_steps": [
+        "calculate free testosterone",
+        "thyroid function tests"
+      ]
+    }
+  ],
+  "when_to_seek_help": "SHBG is only interpreted alongside testosterone. Ask for the calculated free testosterone rather than reading either number alone.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-SHBG-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

@@ -1,0 +1,63 @@
+{
+  "biomarker_name": "Vitamin B12",
+  "aliases": [
+    "B12",
+    "cobalamin",
+    "serum B12"
+  ],
+  "category": "vitamin_mineral",
+  "keywords": [
+    "tired",
+    "fatigue",
+    "anaemia",
+    "pins and needles",
+    "vegan"
+  ],
+  "summary": "Vitamin B12 is needed to make red blood cells and to keep nerves working. Deficiency causes fatigue and anaemia, but it can also cause nerve symptoms that do not fully reverse if left too long.",
+  "what_it_measures": "The concentration of vitamin B12 in blood serum, reported in ng/L.",
+  "reference_ranges": [
+    {
+      "low": 200.0,
+      "high": 900.0,
+      "unit": "ng/L",
+      "sex": "any"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "low",
+      "meaning": "A low B12 can cause tiredness, a sore tongue, and pins and needles in the hands and feet. Levels between 150 and 200 are borderline and may need further testing to settle.",
+      "common_causes": [
+        "pernicious anaemia",
+        "vegan or vegetarian diet",
+        "metformin",
+        "coeliac or Crohn's disease"
+      ],
+      "typical_next_steps": [
+        "intrinsic factor antibodies",
+        "full blood count and MCV",
+        "folate"
+      ]
+    },
+    {
+      "direction": "high",
+      "meaning": "A high B12 usually reflects supplementation and is rarely a problem in itself.",
+      "common_causes": [
+        "B12 supplements or injections",
+        "liver disease"
+      ],
+      "typical_next_steps": [
+        "no action needed if supplementing"
+      ]
+    }
+  ],
+  "when_to_seek_help": "Numbness, pins and needles or unsteadiness with a low B12 should be reviewed promptly, as nerve damage can become permanent.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-VITAMIN-B12-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

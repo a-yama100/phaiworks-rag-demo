@@ -1,0 +1,51 @@
+{
+  "biomarker_name": "NT-proBNP",
+  "aliases": [
+    "BNP",
+    "brain natriuretic peptide",
+    "N-terminal proBNP"
+  ],
+  "category": "cardiac",
+  "keywords": [
+    "breathless",
+    "heart failure",
+    "swelling",
+    "heart"
+  ],
+  "summary": "NT-proBNP is released when heart chambers are stretched by pressure or volume. Its main strength is what a normal result means: it makes heart failure very unlikely, which is why it is used to decide who needs an echocardiogram.",
+  "what_it_measures": "The concentration of N-terminal pro B-type natriuretic peptide in blood, reported in pg/mL.",
+  "reference_ranges": [
+    {
+      "high": 125.0,
+      "unit": "pg/mL",
+      "sex": "any",
+      "note": "heart failure unlikely below this in the non-acute setting"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "high",
+      "meaning": "A raised NT-proBNP suggests the heart is under strain and warrants an echocardiogram. It also rises with age, kidney impairment and atrial fibrillation.",
+      "common_causes": [
+        "heart failure",
+        "atrial fibrillation",
+        "chronic kidney disease",
+        "pulmonary embolism"
+      ],
+      "typical_next_steps": [
+        "echocardiogram",
+        "ECG",
+        "referral timeframe guided by how high the value is"
+      ]
+    }
+  ],
+  "when_to_seek_help": "New or worsening breathlessness, especially lying flat or with swollen ankles, should be assessed by a doctor promptly.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-NT-PROBNP-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

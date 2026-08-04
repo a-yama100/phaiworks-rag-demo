@@ -1,0 +1,51 @@
+{
+  "biomarker_name": "Zinc",
+  "aliases": [
+    "serum zinc",
+    "Zn"
+  ],
+  "category": "vitamin_mineral",
+  "keywords": [
+    "immune",
+    "wound healing",
+    "taste",
+    "hair loss"
+  ],
+  "summary": "Zinc supports immune function, wound healing and taste. Serum zinc falls during any inflammation independently of body stores, so a low result during illness is difficult to interpret.",
+  "what_it_measures": "The concentration of zinc in blood serum, reported in umol/L.",
+  "reference_ranges": [
+    {
+      "low": 11.0,
+      "high": 18.0,
+      "unit": "umol/L",
+      "sex": "any",
+      "note": "fasting morning sample"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "low",
+      "meaning": "A low zinc can cause slow wound healing, altered taste, hair thinning and more frequent infections, but the result must be read alongside CRP because inflammation lowers it artificially.",
+      "common_causes": [
+        "poor dietary intake",
+        "malabsorption",
+        "inflammation",
+        "alcohol"
+      ],
+      "typical_next_steps": [
+        "CRP to check for inflammation",
+        "repeat fasting when well",
+        "dietary review"
+      ]
+    }
+  ],
+  "when_to_seek_help": "Interpret zinc alongside CRP. A low value measured during an infection usually needs repeating rather than treating.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-ZINC-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

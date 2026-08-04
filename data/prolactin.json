@@ -1,0 +1,57 @@
+{
+  "biomarker_name": "Prolactin",
+  "aliases": [
+    "serum prolactin",
+    "PRL"
+  ],
+  "category": "hormone",
+  "keywords": [
+    "periods",
+    "fertility",
+    "milk",
+    "pituitary"
+  ],
+  "summary": "Prolactin is the pituitary hormone that drives milk production. It rises with stress, sleep and even the needle itself, so a mildly raised result is usually repeated before it is investigated.",
+  "what_it_measures": "The concentration of prolactin in blood, reported in mIU/L.",
+  "reference_ranges": [
+    {
+      "low": 86.0,
+      "high": 324.0,
+      "unit": "mIU/L",
+      "sex": "male"
+    },
+    {
+      "low": 102.0,
+      "high": 496.0,
+      "unit": "mIU/L",
+      "sex": "female",
+      "note": "non-pregnant"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "high",
+      "meaning": "A raised prolactin can stop periods, reduce libido and cause milk production outside breastfeeding. Mild rises are often stress or medication; large rises suggest a pituitary adenoma.",
+      "common_causes": [
+        "stress or venepuncture",
+        "antipsychotic and antiemetic medicines",
+        "pituitary adenoma",
+        "hypothyroidism"
+      ],
+      "typical_next_steps": [
+        "repeat with a rested cannulated sample",
+        "TSH",
+        "pituitary MRI if persistently high"
+      ]
+    }
+  ],
+  "when_to_seek_help": "Persistently high prolactin with headaches or visual changes needs prompt assessment, as it can indicate pressure on the optic nerves.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-PROLACTIN-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

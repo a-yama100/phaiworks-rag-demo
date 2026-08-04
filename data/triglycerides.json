@@ -1,0 +1,50 @@
+{
+  "biomarker_name": "Triglycerides",
+  "aliases": [
+    "TG",
+    "serum triglycerides"
+  ],
+  "category": "lipid",
+  "keywords": [
+    "cholesterol",
+    "heart risk",
+    "metabolic syndrome",
+    "fatty liver"
+  ],
+  "summary": "Triglycerides are the main form in which fat travels in the blood and is stored in the body. They respond quickly to recent meals and alcohol, so the timing of the sample matters more than for cholesterol.",
+  "what_it_measures": "The concentration of triglyceride fat in blood, reported in mmol/L, ideally after a fast.",
+  "reference_ranges": [
+    {
+      "high": 1.7,
+      "unit": "mmol/L",
+      "sex": "any",
+      "note": "fasting"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "high",
+      "meaning": "Raised triglycerides often travel with a low HDL and insulin resistance. Very high values also carry a separate risk to the pancreas.",
+      "common_causes": [
+        "alcohol",
+        "high sugar or refined carbohydrate intake",
+        "insulin resistance",
+        "hypothyroidism"
+      ],
+      "typical_next_steps": [
+        "repeat fasting sample",
+        "HbA1c",
+        "alcohol and diet review"
+      ]
+    }
+  ],
+  "when_to_seek_help": "If your triglycerides are above 10 mmol/L there is a risk of pancreatitis and you should speak to your GP promptly.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-TRIGLYCERIDES-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

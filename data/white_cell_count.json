@@ -1,0 +1,66 @@
+{
+  "biomarker_name": "White Cell Count",
+  "aliases": [
+    "WBC",
+    "leucocyte count",
+    "white blood cells"
+  ],
+  "category": "haematology",
+  "keywords": [
+    "infection",
+    "blood count",
+    "immune",
+    "inflammation"
+  ],
+  "summary": "The white cell count totals the immune cells circulating in your blood. The total matters less than which type is raised, which is why it is reported with a differential.",
+  "what_it_measures": "The number of white blood cells per litre of blood, reported as x10^9/L.",
+  "reference_ranges": [
+    {
+      "low": 4.0,
+      "high": 11.0,
+      "unit": "x10^9/L",
+      "sex": "any"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "high",
+      "meaning": "A raised white cell count usually means the immune system is responding to something. Which subtype is raised narrows it: neutrophils suggest bacterial infection, lymphocytes suggest viral.",
+      "common_causes": [
+        "bacterial infection",
+        "viral infection",
+        "steroid treatment",
+        "smoking"
+      ],
+      "typical_next_steps": [
+        "review the differential",
+        "CRP",
+        "repeat once recovered"
+      ]
+    },
+    {
+      "direction": "low",
+      "meaning": "A low white cell count reduces the ability to fight infection, and needs explaining if it persists.",
+      "common_causes": [
+        "viral infection",
+        "some medicines",
+        "autoimmune disease",
+        "bone marrow disorders"
+      ],
+      "typical_next_steps": [
+        "repeat",
+        "medication review",
+        "haematology referral if persistent"
+      ]
+    }
+  ],
+  "when_to_seek_help": "A low white cell count with fever needs urgent medical assessment, particularly if you are on chemotherapy or immune-suppressing medication.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-WHITE-CELL-COUNT-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

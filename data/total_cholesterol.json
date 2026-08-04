@@ -1,0 +1,49 @@
+{
+  "biomarker_name": "Total Cholesterol",
+  "aliases": [
+    "serum cholesterol",
+    "TC"
+  ],
+  "category": "lipid",
+  "keywords": [
+    "cholesterol",
+    "heart risk",
+    "cardiovascular",
+    "statin"
+  ],
+  "summary": "Total cholesterol adds together the cholesterol carried in all lipoprotein particles. It is a blunt number on its own, because it cannot tell a high protective HDL from a high harmful LDL.",
+  "what_it_measures": "The total concentration of cholesterol in blood across all lipoprotein fractions, reported in mmol/L.",
+  "reference_ranges": [
+    {
+      "high": 5.0,
+      "unit": "mmol/L",
+      "sex": "any",
+      "note": "UK target for the general population"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "high",
+      "meaning": "A raised total cholesterol needs breaking down into its parts before it means anything. A high value driven by HDL carries a very different implication from the same value driven by LDL.",
+      "common_causes": [
+        "diet high in saturated fat",
+        "familial hypercholesterolaemia",
+        "hypothyroidism"
+      ],
+      "typical_next_steps": [
+        "full lipid profile including HDL and LDL",
+        "total cholesterol to HDL ratio",
+        "cardiovascular risk score"
+      ]
+    }
+  ],
+  "when_to_seek_help": "Do not act on total cholesterol alone. Ask for the breakdown, and discuss your overall cardiovascular risk with your GP.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-TOTAL-CHOLESTEROL-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

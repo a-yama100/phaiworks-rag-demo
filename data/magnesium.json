@@ -1,0 +1,62 @@
+{
+  "biomarker_name": "Magnesium",
+  "aliases": [
+    "serum magnesium",
+    "Mg"
+  ],
+  "category": "vitamin_mineral",
+  "keywords": [
+    "cramps",
+    "palpitations",
+    "electrolyte",
+    "fatigue"
+  ],
+  "summary": "Magnesium is involved in muscle and nerve function and in maintaining other electrolytes. Blood levels reflect only a small fraction of body stores, so a normal result does not fully exclude depletion.",
+  "what_it_measures": "The concentration of magnesium in blood serum, reported in mmol/L.",
+  "reference_ranges": [
+    {
+      "low": 0.7,
+      "high": 1.0,
+      "unit": "mmol/L",
+      "sex": "any"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "low",
+      "meaning": "A low magnesium can cause cramps, tremor and palpitations, and it makes low potassium and low calcium difficult to correct until it is fixed.",
+      "common_causes": [
+        "proton pump inhibitors",
+        "diuretics",
+        "alcohol",
+        "diarrhoea or poor absorption"
+      ],
+      "typical_next_steps": [
+        "check potassium and calcium",
+        "medication review",
+        "replacement if symptomatic"
+      ]
+    },
+    {
+      "direction": "high",
+      "meaning": "A raised magnesium is uncommon and almost always relates to reduced kidney clearance or magnesium-containing medicines.",
+      "common_causes": [
+        "kidney impairment",
+        "magnesium-containing laxatives or antacids"
+      ],
+      "typical_next_steps": [
+        "kidney function tests",
+        "medication review"
+      ]
+    }
+  ],
+  "when_to_seek_help": "Palpitations, severe cramps or muscle weakness with an abnormal magnesium should be discussed with your GP promptly.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-MAGNESIUM-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

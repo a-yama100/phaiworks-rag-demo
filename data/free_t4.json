@@ -1,0 +1,64 @@
+{
+  "biomarker_name": "Free T4",
+  "aliases": [
+    "FT4",
+    "free thyroxine",
+    "thyroxine"
+  ],
+  "category": "thyroid",
+  "keywords": [
+    "thyroid",
+    "underactive thyroid",
+    "overactive thyroid",
+    "fatigue"
+  ],
+  "summary": "Free T4 is the unbound thyroxine available for your body to use. It is measured alongside TSH because the two together tell you whether a thyroid problem sits in the thyroid itself or in the pituitary gland directing it.",
+  "what_it_measures": "The concentration of thyroxine not bound to carrier proteins, reported in pmol/L.",
+  "reference_ranges": [
+    {
+      "low": 12.0,
+      "high": 22.0,
+      "unit": "pmol/L",
+      "sex": "any"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "low",
+      "meaning": "A low free T4 with a high TSH is the usual pattern of an underactive thyroid. A low free T4 with a low or normal TSH instead points to the pituitary.",
+      "common_causes": [
+        "Hashimoto's thyroiditis",
+        "treated overactive thyroid",
+        "pituitary disease"
+      ],
+      "typical_next_steps": [
+        "repeat with TSH",
+        "thyroid antibody testing",
+        "GP review"
+      ]
+    },
+    {
+      "direction": "high",
+      "meaning": "A raised free T4 with a suppressed TSH is the usual pattern of an overactive thyroid.",
+      "common_causes": [
+        "Graves' disease",
+        "thyroiditis",
+        "over-replacement with levothyroxine"
+      ],
+      "typical_next_steps": [
+        "repeat with TSH",
+        "free T3",
+        "GP or endocrinology review"
+      ]
+    }
+  ],
+  "when_to_seek_help": "If you have a fast or irregular heartbeat, marked weight loss, or severe fatigue alongside an abnormal result, contact your GP promptly.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-FREE-T4-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

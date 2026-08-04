@@ -1,0 +1,63 @@
+{
+  "biomarker_name": "Cortisol",
+  "aliases": [
+    "serum cortisol",
+    "morning cortisol"
+  ],
+  "category": "hormone",
+  "keywords": [
+    "stress",
+    "fatigue",
+    "adrenal",
+    "weight"
+  ],
+  "summary": "Cortisol is the body's main stress hormone and swings by a factor of several through the day, peaking shortly after waking. A random cortisol is close to uninterpretable, which is why it is drawn at 9am.",
+  "what_it_measures": "The concentration of cortisol in blood serum, reported in nmol/L, conventionally at 9am.",
+  "reference_ranges": [
+    {
+      "low": 166.0,
+      "high": 507.0,
+      "unit": "nmol/L",
+      "sex": "any",
+      "note": "9am sample"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "low",
+      "meaning": "A low morning cortisol raises the possibility that the adrenal glands are underactive, which needs confirming with a stimulation test rather than acting on the single value.",
+      "common_causes": [
+        "adrenal insufficiency",
+        "recent steroid treatment",
+        "pituitary disease"
+      ],
+      "typical_next_steps": [
+        "short synacthen test",
+        "endocrinology referral"
+      ]
+    },
+    {
+      "direction": "high",
+      "meaning": "A raised cortisol can reflect stress or acute illness as readily as a hormonal disorder, so confirmation testing is always needed.",
+      "common_causes": [
+        "acute stress or illness",
+        "Cushing's syndrome",
+        "steroid medication",
+        "late sampling"
+      ],
+      "typical_next_steps": [
+        "overnight dexamethasone suppression test",
+        "24-hour urinary cortisol"
+      ]
+    }
+  ],
+  "when_to_seek_help": "Marked fatigue with dizziness on standing, weight loss and darkened skin can indicate adrenal insufficiency and needs prompt medical assessment.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-CORTISOL-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

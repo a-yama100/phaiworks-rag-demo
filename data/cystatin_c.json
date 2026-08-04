@@ -1,0 +1,46 @@
+{
+  "biomarker_name": "Cystatin C",
+  "aliases": [
+    "serum cystatin C"
+  ],
+  "category": "kidney",
+  "keywords": [
+    "kidney",
+    "renal function",
+    "eGFR"
+  ],
+  "summary": "Cystatin C is filtered by the kidneys like creatinine, but it does not depend on muscle mass. That makes it the better filtration marker in people whose build makes creatinine misleading.",
+  "what_it_measures": "The concentration of cystatin C in blood, reported in mg/L, used to calculate an alternative eGFR.",
+  "reference_ranges": [
+    {
+      "low": 0.53,
+      "high": 0.95,
+      "unit": "mg/L",
+      "sex": "any"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "high",
+      "meaning": "A raised cystatin C indicates reduced kidney filtration, and is often used to confirm a borderline creatinine-based eGFR before labelling someone with chronic kidney disease.",
+      "common_causes": [
+        "chronic kidney disease",
+        "acute kidney injury",
+        "thyroid dysfunction"
+      ],
+      "typical_next_steps": [
+        "cystatin C based eGFR",
+        "compare with creatinine based eGFR"
+      ]
+    }
+  ],
+  "when_to_seek_help": "Cystatin C is usually ordered to clarify an uncertain eGFR. Interpretation belongs with the clinician who requested it.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-CYSTATIN-C-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

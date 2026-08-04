@@ -1,0 +1,62 @@
+{
+  "biomarker_name": "Free T3",
+  "aliases": [
+    "FT3",
+    "free triiodothyronine",
+    "triiodothyronine"
+  ],
+  "category": "thyroid",
+  "keywords": [
+    "thyroid",
+    "overactive thyroid",
+    "fatigue",
+    "palpitations"
+  ],
+  "summary": "Free T3 is the active thyroid hormone that actually acts on your tissues. Most T3 is converted from T4 outside the thyroid, so it is usually added when TSH and T4 disagree or when overactivity is suspected.",
+  "what_it_measures": "The concentration of triiodothyronine not bound to carrier proteins, reported in pmol/L.",
+  "reference_ranges": [
+    {
+      "low": 3.1,
+      "high": 6.8,
+      "unit": "pmol/L",
+      "sex": "any"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "high",
+      "meaning": "A raised free T3 with a suppressed TSH confirms an overactive thyroid, and can be raised when free T4 is still normal.",
+      "common_causes": [
+        "Graves' disease",
+        "toxic nodule",
+        "excess thyroid medication"
+      ],
+      "typical_next_steps": [
+        "repeat with TSH and free T4",
+        "endocrinology referral"
+      ]
+    },
+    {
+      "direction": "low",
+      "meaning": "A low free T3 in someone who is unwell for another reason often reflects that illness rather than thyroid disease.",
+      "common_causes": [
+        "non-thyroidal illness",
+        "severe underactive thyroid",
+        "starvation"
+      ],
+      "typical_next_steps": [
+        "interpret alongside TSH and free T4",
+        "repeat after recovery"
+      ]
+    }
+  ],
+  "when_to_seek_help": "Free T3 should not be interpreted on its own. If you have palpitations, tremor or unexplained weight loss, contact your GP.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-FREE-T3-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

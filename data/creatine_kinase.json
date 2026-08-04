@@ -1,0 +1,57 @@
+{
+  "biomarker_name": "Creatine Kinase",
+  "aliases": [
+    "CK",
+    "creatine phosphokinase",
+    "CPK"
+  ],
+  "category": "cardiac",
+  "keywords": [
+    "muscle",
+    "muscle pain",
+    "statin",
+    "exercise"
+  ],
+  "summary": "Creatine kinase leaks from damaged muscle. Most raised results come from ordinary exercise rather than disease, so what was happening in the days before the sample matters as much as the number.",
+  "what_it_measures": "The activity of creatine kinase in blood, reported in U/L.",
+  "reference_ranges": [
+    {
+      "low": 40.0,
+      "high": 320.0,
+      "unit": "U/L",
+      "sex": "male"
+    },
+    {
+      "low": 25.0,
+      "high": 200.0,
+      "unit": "U/L",
+      "sex": "female"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "high",
+      "meaning": "A raised CK indicates muscle breakdown. Strenuous exercise in the preceding days is the commonest cause by a wide margin; very high values with dark urine suggest rhabdomyolysis.",
+      "common_causes": [
+        "recent strenuous exercise",
+        "statin-related muscle injury",
+        "muscle trauma",
+        "hypothyroidism"
+      ],
+      "typical_next_steps": [
+        "repeat after 7 days without exercise",
+        "kidney function tests",
+        "review statin if symptomatic"
+      ]
+    }
+  ],
+  "when_to_seek_help": "Severe muscle pain with dark or cola-coloured urine needs urgent assessment, as it can cause kidney injury.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-CREATINE-KINASE-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

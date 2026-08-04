@@ -1,0 +1,56 @@
+{
+  "biomarker_name": "hs-CRP",
+  "aliases": [
+    "high-sensitivity CRP",
+    "cardiac CRP"
+  ],
+  "category": "inflammation",
+  "keywords": [
+    "inflammation",
+    "heart risk",
+    "cardiovascular"
+  ],
+  "summary": "hs-CRP measures the same protein as CRP but at much lower concentrations. It is used for cardiovascular risk stratification, where small persistent differences matter, rather than for detecting infection.",
+  "what_it_measures": "The concentration of C-reactive protein measured with a high-sensitivity assay, reported in mg/L.",
+  "reference_ranges": [
+    {
+      "high": 1.0,
+      "unit": "mg/L",
+      "sex": "any",
+      "note": "low cardiovascular risk"
+    },
+    {
+      "low": 1.0,
+      "high": 3.0,
+      "unit": "mg/L",
+      "sex": "any",
+      "note": "average cardiovascular risk"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "high",
+      "meaning": "A persistently raised hs-CRP above 3 mg/L is associated with higher cardiovascular risk. A single high value during an infection says nothing about heart risk and should be repeated once well.",
+      "common_causes": [
+        "chronic low-grade inflammation",
+        "obesity",
+        "smoking",
+        "any current infection"
+      ],
+      "typical_next_steps": [
+        "repeat when free of infection",
+        "cardiovascular risk assessment",
+        "lifestyle review"
+      ]
+    }
+  ],
+  "when_to_seek_help": "hs-CRP is only meaningful when you are otherwise well. If it is measured during an illness, ask for it to be repeated.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-HS-CRP-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

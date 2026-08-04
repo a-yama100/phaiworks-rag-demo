@@ -1,0 +1,49 @@
+{
+  "biomarker_name": "Homocysteine",
+  "aliases": [
+    "plasma homocysteine",
+    "Hcy"
+  ],
+  "category": "cardiac",
+  "keywords": [
+    "heart risk",
+    "B12",
+    "folate",
+    "cardiovascular"
+  ],
+  "summary": "Homocysteine is an amino acid that accumulates when B12, folate or B6 are in short supply. It is associated with cardiovascular risk, though lowering it with supplements has not been shown to reduce events.",
+  "what_it_measures": "The concentration of homocysteine in blood plasma, reported in umol/L.",
+  "reference_ranges": [
+    {
+      "high": 15.0,
+      "unit": "umol/L",
+      "sex": "any"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "high",
+      "meaning": "A raised homocysteine usually points to a B vitamin deficiency and is often used to confirm a borderline B12 result rather than as a cardiovascular test in its own right.",
+      "common_causes": [
+        "vitamin B12 deficiency",
+        "folate deficiency",
+        "kidney impairment",
+        "inherited MTHFR variants"
+      ],
+      "typical_next_steps": [
+        "B12 and folate",
+        "kidney function tests",
+        "correct any deficiency found"
+      ]
+    }
+  ],
+  "when_to_seek_help": "A raised homocysteine is mainly a prompt to check B12 and folate. Treating the number itself has not been shown to reduce heart risk.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-HOMOCYSTEINE-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

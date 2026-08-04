@@ -1,0 +1,68 @@
+{
+  "biomarker_name": "HDL Cholesterol",
+  "aliases": [
+    "high-density lipoprotein",
+    "HDL",
+    "good cholesterol"
+  ],
+  "category": "lipid",
+  "keywords": [
+    "cholesterol",
+    "heart risk",
+    "cardiovascular"
+  ],
+  "summary": "HDL carries cholesterol away from the arteries and back to the liver. Because of that direction of travel, a higher HDL is generally read as protective — the opposite of how LDL is read.",
+  "what_it_measures": "The concentration of cholesterol carried in high-density lipoprotein particles, reported in mmol/L.",
+  "reference_ranges": [
+    {
+      "low": 1.0,
+      "unit": "mmol/L",
+      "sex": "male",
+      "note": "desirable"
+    },
+    {
+      "low": 1.2,
+      "unit": "mmol/L",
+      "sex": "female",
+      "note": "desirable"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "low",
+      "meaning": "A low HDL is associated with higher cardiovascular risk, particularly when triglycerides are raised at the same time.",
+      "common_causes": [
+        "physical inactivity",
+        "smoking",
+        "type 2 diabetes",
+        "genetic factors"
+      ],
+      "typical_next_steps": [
+        "full lipid profile",
+        "cardiovascular risk assessment",
+        "lifestyle review"
+      ]
+    },
+    {
+      "direction": "high",
+      "meaning": "A high HDL is usually unremarkable, though very high values are not necessarily more protective than moderately raised ones.",
+      "common_causes": [
+        "regular aerobic exercise",
+        "moderate alcohol intake",
+        "genetic factors"
+      ],
+      "typical_next_steps": [
+        "no action needed in isolation"
+      ]
+    }
+  ],
+  "when_to_seek_help": "HDL is only meaningful as part of a full lipid profile and an overall risk assessment. Discuss the whole panel with your GP.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-HDL-CHOLESTEROL-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

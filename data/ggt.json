@@ -1,0 +1,54 @@
+{
+  "biomarker_name": "GGT",
+  "aliases": [
+    "gamma-glutamyl transferase",
+    "gamma GT"
+  ],
+  "category": "liver",
+  "keywords": [
+    "liver",
+    "alcohol",
+    "bile ducts",
+    "liver enzymes"
+  ],
+  "summary": "GGT is sensitive to alcohol and to bile duct problems. Its most common job is to answer whether a raised ALP is coming from the liver or from bone.",
+  "what_it_measures": "The activity of gamma-glutamyl transferase in blood, reported in U/L.",
+  "reference_ranges": [
+    {
+      "high": 38.0,
+      "unit": "U/L",
+      "sex": "female"
+    },
+    {
+      "high": 55.0,
+      "unit": "U/L",
+      "sex": "male"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "high",
+      "meaning": "A raised GGT alongside a raised ALP confirms a liver or bile duct source. GGT alone is often related to alcohol, medication or fatty liver, and a mildly raised value in isolation is common.",
+      "common_causes": [
+        "alcohol",
+        "fatty liver",
+        "bile duct obstruction",
+        "enzyme-inducing medicines"
+      ],
+      "typical_next_steps": [
+        "review alcohol intake",
+        "repeat after a period without alcohol",
+        "liver ultrasound if persistent"
+      ]
+    }
+  ],
+  "when_to_seek_help": "An isolated mildly raised GGT is common and often not serious. Discuss it with your GP alongside the rest of your liver panel.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-GGT-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

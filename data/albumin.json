@@ -1,0 +1,49 @@
+{
+  "biomarker_name": "Albumin",
+  "aliases": [
+    "serum albumin"
+  ],
+  "category": "liver",
+  "keywords": [
+    "liver",
+    "nutrition",
+    "protein",
+    "kidney"
+  ],
+  "summary": "Albumin is the main protein the liver makes and releases into the blood. Because it takes weeks to fall, it reflects longer-term liver function and nutrition rather than a sudden insult.",
+  "what_it_measures": "The concentration of albumin protein in blood, reported in g/L.",
+  "reference_ranges": [
+    {
+      "low": 35.0,
+      "high": 50.0,
+      "unit": "g/L",
+      "sex": "any"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "low",
+      "meaning": "A low albumin can mean the liver is making less, the kidneys are losing it, or the body is using it up during illness. It is a general marker of how well someone is, not a specific diagnosis.",
+      "common_causes": [
+        "chronic liver disease",
+        "nephrotic syndrome",
+        "malnutrition",
+        "acute severe illness"
+      ],
+      "typical_next_steps": [
+        "urine protein testing",
+        "full liver panel",
+        "nutritional review"
+      ]
+    }
+  ],
+  "when_to_seek_help": "A low albumin with swelling of the legs or abdomen should be reviewed by your GP.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-ALBUMIN-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

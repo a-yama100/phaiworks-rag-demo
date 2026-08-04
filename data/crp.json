@@ -1,0 +1,50 @@
+{
+  "biomarker_name": "CRP",
+  "aliases": [
+    "C-reactive protein",
+    "serum CRP"
+  ],
+  "category": "inflammation",
+  "keywords": [
+    "inflammation",
+    "infection",
+    "fever",
+    "unwell"
+  ],
+  "summary": "CRP rises within hours of inflammation starting anywhere in the body and falls quickly once it settles. It is sensitive but not specific: it tells you something is inflamed, not what or where.",
+  "what_it_measures": "The concentration of C-reactive protein in blood, reported in mg/L.",
+  "reference_ranges": [
+    {
+      "high": 5.0,
+      "unit": "mg/L",
+      "sex": "any",
+      "note": "normal"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "high",
+      "meaning": "A raised CRP means active inflammation somewhere. Values under about 10 mg/L are often minor; values above 100 mg/L usually point to significant infection or inflammation.",
+      "common_causes": [
+        "bacterial infection",
+        "inflammatory arthritis",
+        "injury or surgery",
+        "inflammatory bowel disease"
+      ],
+      "typical_next_steps": [
+        "clinical assessment to find the source",
+        "repeat to track the trend",
+        "full blood count"
+      ]
+    }
+  ],
+  "when_to_seek_help": "A high CRP with fever, severe pain or feeling very unwell needs same-day medical assessment.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-CRP-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

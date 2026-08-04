@@ -1,0 +1,55 @@
+{
+  "biomarker_name": "Uric Acid",
+  "aliases": [
+    "urate",
+    "serum urate"
+  ],
+  "category": "kidney",
+  "keywords": [
+    "gout",
+    "joint pain",
+    "kidney stones"
+  ],
+  "summary": "Uric acid is produced when the body breaks down purines from food and from its own cells. When it exceeds what stays dissolved, crystals form in joints, which is gout.",
+  "what_it_measures": "The concentration of urate in blood, reported in micromol/L.",
+  "reference_ranges": [
+    {
+      "low": 140.0,
+      "high": 360.0,
+      "unit": "umol/L",
+      "sex": "female"
+    },
+    {
+      "low": 200.0,
+      "high": 430.0,
+      "unit": "umol/L",
+      "sex": "male"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "high",
+      "meaning": "A raised urate increases the risk of gout and urate kidney stones. Many people with a raised level never develop symptoms, so it is not treated on the number alone.",
+      "common_causes": [
+        "gout",
+        "diuretic medicines",
+        "high alcohol or purine intake",
+        "kidney impairment"
+      ],
+      "typical_next_steps": [
+        "treat only if symptomatic",
+        "review diuretics and alcohol",
+        "kidney function tests"
+      ]
+    }
+  ],
+  "when_to_seek_help": "A hot, swollen, exquisitely painful joint needs assessment — urate levels can be normal during an acute gout attack, so the diagnosis is clinical.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-URIC-ACID-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

@@ -1,0 +1,48 @@
+{
+  "biomarker_name": "Thyroglobulin",
+  "aliases": [
+    "Tg",
+    "serum thyroglobulin"
+  ],
+  "category": "thyroid",
+  "keywords": [
+    "thyroid",
+    "thyroid cancer",
+    "monitoring"
+  ],
+  "summary": "Thyroglobulin is a protein made only by thyroid tissue. Its main use is monitoring after a thyroid has been removed for cancer, where any measurable level suggests thyroid tissue remains.",
+  "what_it_measures": "The concentration of thyroglobulin protein in blood, reported in ng/mL, always interpreted with thyroglobulin antibodies.",
+  "reference_ranges": [
+    {
+      "low": 1.4,
+      "high": 78.0,
+      "unit": "ng/mL",
+      "sex": "any",
+      "note": "intact thyroid; the target is undetectable after total thyroidectomy"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "high",
+      "meaning": "A rising thyroglobulin after thyroid surgery for cancer suggests residual or recurrent thyroid tissue.",
+      "common_causes": [
+        "residual thyroid tissue",
+        "recurrent thyroid cancer",
+        "thyroiditis"
+      ],
+      "typical_next_steps": [
+        "imaging",
+        "specialist oncology or endocrinology review"
+      ]
+    }
+  ],
+  "when_to_seek_help": "Thyroglobulin is a specialist monitoring test. Results should be interpreted by the team managing your thyroid condition.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-THYROGLOBULIN-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

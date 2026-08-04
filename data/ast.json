@@ -1,0 +1,54 @@
+{
+  "biomarker_name": "AST",
+  "aliases": [
+    "aspartate aminotransferase",
+    "SGOT"
+  ],
+  "category": "liver",
+  "keywords": [
+    "liver",
+    "liver enzymes",
+    "muscle",
+    "alcohol"
+  ],
+  "summary": "AST is found in the liver but also in heart and skeletal muscle, so it is less liver-specific than ALT. Its main value is the ratio to ALT, which points towards different causes.",
+  "what_it_measures": "The activity of aspartate aminotransferase in blood, reported in U/L.",
+  "reference_ranges": [
+    {
+      "high": 32.0,
+      "unit": "U/L",
+      "sex": "female"
+    },
+    {
+      "high": 40.0,
+      "unit": "U/L",
+      "sex": "male"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "high",
+      "meaning": "A raised AST can come from the liver or from muscle. An AST that is roughly twice the ALT is the classic pattern in alcohol-related liver disease; an isolated AST rise with normal ALT points at muscle instead.",
+      "common_causes": [
+        "alcohol-related liver disease",
+        "fatty liver",
+        "strenuous exercise",
+        "muscle injury"
+      ],
+      "typical_next_steps": [
+        "compare with ALT",
+        "creatine kinase if muscle is suspected",
+        "review alcohol intake"
+      ]
+    }
+  ],
+  "when_to_seek_help": "AST is interpreted alongside ALT rather than alone. Discuss the pattern of your whole liver panel with your GP.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-AST-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

@@ -1,0 +1,62 @@
+{
+  "biomarker_name": "Urea",
+  "aliases": [
+    "blood urea nitrogen",
+    "BUN",
+    "serum urea"
+  ],
+  "category": "kidney",
+  "keywords": [
+    "kidney",
+    "dehydration",
+    "renal function"
+  ],
+  "summary": "Urea is the waste product of protein breakdown, cleared by the kidneys. It responds strongly to hydration and to how much protein you have eaten, which makes it a poorer kidney marker than creatinine but a useful hydration marker.",
+  "what_it_measures": "The concentration of urea in blood, reported in mmol/L.",
+  "reference_ranges": [
+    {
+      "low": 2.5,
+      "high": 7.8,
+      "unit": "mmol/L",
+      "sex": "any"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "high",
+      "meaning": "A raised urea that rises more than creatinine usually points to dehydration or bleeding into the gut rather than to kidney disease itself.",
+      "common_causes": [
+        "dehydration",
+        "high protein intake",
+        "gastrointestinal bleeding",
+        "kidney impairment"
+      ],
+      "typical_next_steps": [
+        "compare with creatinine",
+        "assess hydration",
+        "repeat after rehydration"
+      ]
+    },
+    {
+      "direction": "low",
+      "meaning": "A low urea usually reflects low protein intake or liver disease, and is rarely significant alone.",
+      "common_causes": [
+        "low protein diet",
+        "chronic liver disease",
+        "pregnancy"
+      ],
+      "typical_next_steps": [
+        "no action needed in isolation"
+      ]
+    }
+  ],
+  "when_to_seek_help": "Urea is interpreted with creatinine and eGFR. Discuss the pattern rather than the single number with your GP.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-UREA-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

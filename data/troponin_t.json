@@ -1,0 +1,50 @@
+{
+  "biomarker_name": "Troponin T",
+  "aliases": [
+    "high-sensitivity troponin",
+    "hs-cTnT",
+    "cardiac troponin"
+  ],
+  "category": "cardiac",
+  "keywords": [
+    "chest pain",
+    "heart attack",
+    "heart"
+  ],
+  "summary": "Troponin is a protein released when heart muscle cells are damaged. It is the test used to diagnose a heart attack, and it is interpreted from the change between two samples rather than from one value.",
+  "what_it_measures": "The concentration of cardiac troponin T measured with a high-sensitivity assay, reported in ng/L.",
+  "reference_ranges": [
+    {
+      "high": 14.0,
+      "unit": "ng/L",
+      "sex": "any",
+      "note": "assay-specific; the change between samples matters more than the value"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "high",
+      "meaning": "A raised troponin means heart muscle injury, but not necessarily a heart attack. Kidney disease, heart failure and severe infection all raise it without a blocked artery.",
+      "common_causes": [
+        "myocardial infarction",
+        "heart failure",
+        "chronic kidney disease",
+        "severe infection"
+      ],
+      "typical_next_steps": [
+        "repeat sample after 1-3 hours",
+        "ECG",
+        "immediate hospital assessment if chest pain"
+      ]
+    }
+  ],
+  "when_to_seek_help": "Chest pain, or pain in the arm, jaw or back with breathlessness or sweating, is a medical emergency. Call 999 rather than waiting for a blood test.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-TROPONIN-T-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

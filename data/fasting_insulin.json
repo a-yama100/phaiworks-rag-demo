@@ -1,0 +1,72 @@
+{
+  "biomarker_name": "Fasting Insulin",
+  "aliases": [
+    "serum insulin",
+    "fasting serum insulin"
+  ],
+  "category": "metabolic",
+  "keywords": [
+    "insulin resistance",
+    "metabolic syndrome",
+    "PCOS",
+    "blood sugar"
+  ],
+  "summary": "Fasting insulin shows how much insulin your pancreas is releasing to keep blood sugar normal. It can rise years before glucose does, so it is used to look for insulin resistance early.",
+  "what_it_measures": "The concentration of insulin in blood after an overnight fast, reported in pmol/L or mIU/L.",
+  "reference_ranges": [
+    {
+      "low": 18.0,
+      "high": 173.0,
+      "unit": "pmol/L",
+      "sex": "any",
+      "note": "fasting"
+    },
+    {
+      "low": 2.6,
+      "high": 24.9,
+      "unit": "mIU/L",
+      "sex": "any",
+      "note": "fasting"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "high",
+      "meaning": "A raised fasting insulin with a normal glucose usually means the pancreas is working harder than it should to keep glucose in range, which is the pattern called insulin resistance.",
+      "common_causes": [
+        "insulin resistance",
+        "obesity",
+        "polycystic ovary syndrome",
+        "metabolic syndrome"
+      ],
+      "typical_next_steps": [
+        "HOMA-IR calculation",
+        "HbA1c",
+        "lifestyle and weight review"
+      ]
+    },
+    {
+      "direction": "low",
+      "meaning": "A low fasting insulin alongside a high glucose suggests the pancreas is not producing enough insulin.",
+      "common_causes": [
+        "type 1 diabetes",
+        "long-standing type 2 diabetes",
+        "pancreatic disease"
+      ],
+      "typical_next_steps": [
+        "C-peptide",
+        "diabetes antibody testing",
+        "specialist referral"
+      ]
+    }
+  ],
+  "when_to_seek_help": "Fasting insulin is interpreted with glucose, not alone. Discuss the pair with your GP rather than acting on either number by itself.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-FASTING-INSULIN-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

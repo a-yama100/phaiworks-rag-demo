@@ -1,0 +1,64 @@
+{
+  "biomarker_name": "MCV",
+  "aliases": [
+    "mean corpuscular volume",
+    "mean cell volume",
+    "red cell size"
+  ],
+  "category": "haematology",
+  "keywords": [
+    "anaemia",
+    "blood count",
+    "B12",
+    "iron"
+  ],
+  "summary": "MCV is the average size of your red blood cells. On its own it means little, but it is the fork in the road when haemoglobin is low: small cells and large cells point to entirely different causes.",
+  "what_it_measures": "The average volume of a red blood cell, reported in femtolitres.",
+  "reference_ranges": [
+    {
+      "low": 80.0,
+      "high": 100.0,
+      "unit": "fL",
+      "sex": "any"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "low",
+      "meaning": "Small red cells with a low haemoglobin point to iron deficiency or an inherited haemoglobin disorder.",
+      "common_causes": [
+        "iron deficiency",
+        "thalassaemia trait",
+        "chronic disease"
+      ],
+      "typical_next_steps": [
+        "ferritin",
+        "haemoglobinopathy screen if ferritin is normal"
+      ]
+    },
+    {
+      "direction": "high",
+      "meaning": "Large red cells point towards B12 or folate deficiency, alcohol, or thyroid disease.",
+      "common_causes": [
+        "vitamin B12 deficiency",
+        "folate deficiency",
+        "alcohol",
+        "hypothyroidism"
+      ],
+      "typical_next_steps": [
+        "B12 and folate",
+        "liver function tests",
+        "TSH"
+      ]
+    }
+  ],
+  "when_to_seek_help": "MCV is interpreted with haemoglobin. Discuss the pair with your GP rather than either alone.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-MCV-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

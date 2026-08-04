@@ -1,0 +1,71 @@
+{
+  "biomarker_name": "Testosterone",
+  "aliases": [
+    "total testosterone",
+    "serum testosterone"
+  ],
+  "category": "hormone",
+  "keywords": [
+    "low mood",
+    "libido",
+    "fatigue",
+    "muscle"
+  ],
+  "summary": "Testosterone is the main androgen in men and is also present at lower levels in women. It follows a daily rhythm and peaks in the morning, so the timing of the sample changes the result substantially.",
+  "what_it_measures": "The total concentration of testosterone in blood, reported in nmol/L, ideally from a morning fasting sample.",
+  "reference_ranges": [
+    {
+      "low": 8.6,
+      "high": 29.0,
+      "unit": "nmol/L",
+      "sex": "male",
+      "note": "morning sample, ages 19-49"
+    },
+    {
+      "low": 0.3,
+      "high": 1.7,
+      "unit": "nmol/L",
+      "sex": "female"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "low",
+      "meaning": "A low testosterone in men can cause reduced libido, fatigue and loss of muscle. A single low afternoon sample is not enough to act on and should be repeated in the morning.",
+      "common_causes": [
+        "obesity",
+        "sleep apnoea",
+        "pituitary disease",
+        "afternoon sampling"
+      ],
+      "typical_next_steps": [
+        "repeat morning fasting sample",
+        "SHBG and LH",
+        "endocrinology referral if confirmed"
+      ]
+    },
+    {
+      "direction": "high",
+      "meaning": "A raised testosterone in women can cause acne, excess hair growth and irregular periods.",
+      "common_causes": [
+        "polycystic ovary syndrome",
+        "androgen supplements",
+        "adrenal conditions"
+      ],
+      "typical_next_steps": [
+        "SHBG",
+        "pelvic ultrasound",
+        "gynaecology or endocrinology review"
+      ]
+    }
+  ],
+  "when_to_seek_help": "Testosterone must be measured on a morning sample and confirmed on a second occasion before any treatment decision. Discuss results with your GP.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-TESTOSTERONE-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

@@ -1,0 +1,62 @@
+{
+  "biomarker_name": "C-Peptide",
+  "aliases": [
+    "connecting peptide",
+    "serum C-peptide"
+  ],
+  "category": "metabolic",
+  "keywords": [
+    "diabetes type",
+    "insulin production",
+    "blood sugar"
+  ],
+  "summary": "C-peptide is released in equal amounts to insulin when the pancreas makes it, but injected insulin contains none. That makes it the test that distinguishes insulin your body produced from insulin you were given.",
+  "what_it_measures": "The concentration of connecting peptide in blood, reflecting how much insulin the pancreas is producing itself.",
+  "reference_ranges": [
+    {
+      "low": 0.26,
+      "high": 1.03,
+      "unit": "nmol/L",
+      "sex": "any",
+      "note": "fasting"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "low",
+      "meaning": "A low C-peptide means the pancreas is producing little or no insulin of its own.",
+      "common_causes": [
+        "type 1 diabetes",
+        "late-stage type 2 diabetes",
+        "pancreatic damage"
+      ],
+      "typical_next_steps": [
+        "diabetes antibody testing",
+        "specialist diabetes referral"
+      ]
+    },
+    {
+      "direction": "high",
+      "meaning": "A raised C-peptide means the pancreas is producing plenty of insulin, which points towards insulin resistance rather than insulin deficiency.",
+      "common_causes": [
+        "insulin resistance",
+        "type 2 diabetes",
+        "rarely an insulin-producing tumour"
+      ],
+      "typical_next_steps": [
+        "HOMA-IR",
+        "HbA1c",
+        "GP review"
+      ]
+    }
+  ],
+  "when_to_seek_help": "C-peptide is used to work out which type of diabetes someone has. Interpretation belongs with a clinician who has the glucose results alongside it.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-C-PEPTIDE-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

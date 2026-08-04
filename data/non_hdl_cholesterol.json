@@ -1,0 +1,49 @@
+{
+  "biomarker_name": "Non-HDL Cholesterol",
+  "aliases": [
+    "non-HDL-C"
+  ],
+  "category": "lipid",
+  "keywords": [
+    "cholesterol",
+    "heart risk",
+    "cardiovascular",
+    "statin"
+  ],
+  "summary": "Non-HDL cholesterol is total cholesterol minus HDL, so it captures everything potentially harmful in one number. UK guidance now prefers it to LDL because it needs no fasting sample and no calculation that breaks when triglycerides are high.",
+  "what_it_measures": "A calculated value: total cholesterol minus HDL cholesterol, reported in mmol/L.",
+  "reference_ranges": [
+    {
+      "high": 4.0,
+      "unit": "mmol/L",
+      "sex": "any",
+      "note": "UK target for the general population"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "high",
+      "meaning": "A raised non-HDL cholesterol means more cholesterol is being carried in particles that can deposit in artery walls.",
+      "common_causes": [
+        "diet high in saturated fat",
+        "familial hypercholesterolaemia",
+        "hypothyroidism",
+        "type 2 diabetes"
+      ],
+      "typical_next_steps": [
+        "cardiovascular risk score",
+        "consider lipid-lowering treatment",
+        "GP review"
+      ]
+    }
+  ],
+  "when_to_seek_help": "Non-HDL cholesterol is used to guide treatment decisions alongside your overall risk score. Discuss it with your GP rather than in isolation.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-NON-HDL-CHOLESTEROL-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

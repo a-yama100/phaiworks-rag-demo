@@ -1,0 +1,48 @@
+{
+  "biomarker_name": "HOMA-IR",
+  "aliases": [
+    "homeostatic model assessment",
+    "insulin resistance index"
+  ],
+  "category": "metabolic",
+  "keywords": [
+    "insulin resistance",
+    "metabolic syndrome",
+    "blood sugar"
+  ],
+  "summary": "HOMA-IR is not a separate blood test. It is a number calculated from fasting glucose and fasting insulin together, used as a simple estimate of insulin resistance.",
+  "what_it_measures": "A calculated index: fasting glucose in mmol/L multiplied by fasting insulin in mIU/L, divided by 22.5.",
+  "reference_ranges": [
+    {
+      "high": 2.0,
+      "unit": "index",
+      "sex": "any",
+      "note": "values above roughly 2.0 suggest insulin resistance"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "high",
+      "meaning": "A raised HOMA-IR means more insulin than expected is needed to hold glucose steady. It is a screening signal rather than a diagnosis, and thresholds vary between labs and populations.",
+      "common_causes": [
+        "insulin resistance",
+        "central obesity",
+        "polycystic ovary syndrome"
+      ],
+      "typical_next_steps": [
+        "lifestyle and weight review",
+        "HbA1c",
+        "repeat after intervention"
+      ]
+    }
+  ],
+  "when_to_seek_help": "HOMA-IR is a research-derived index with no single agreed cut-off. Treat a raised value as a prompt to discuss metabolic risk with your GP, not as a diagnosis.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-HOMA-IR-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

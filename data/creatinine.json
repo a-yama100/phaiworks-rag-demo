@@ -1,0 +1,67 @@
+{
+  "biomarker_name": "Creatinine",
+  "aliases": [
+    "serum creatinine"
+  ],
+  "category": "kidney",
+  "keywords": [
+    "kidney",
+    "renal function",
+    "eGFR"
+  ],
+  "summary": "Creatinine is a waste product from normal muscle turnover that healthy kidneys clear steadily. Because production depends on muscle mass, the same number means different things in a heavily built person and a frail one.",
+  "what_it_measures": "The concentration of creatinine in blood, reported in micromol/L.",
+  "reference_ranges": [
+    {
+      "low": 45.0,
+      "high": 84.0,
+      "unit": "umol/L",
+      "sex": "female"
+    },
+    {
+      "low": 59.0,
+      "high": 104.0,
+      "unit": "umol/L",
+      "sex": "male"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "high",
+      "meaning": "A raised creatinine suggests the kidneys are clearing less than usual. It also rises with dehydration, high muscle mass and some medicines, so it is read as a trend rather than a single value.",
+      "common_causes": [
+        "chronic kidney disease",
+        "dehydration",
+        "acute kidney injury",
+        "high muscle mass"
+      ],
+      "typical_next_steps": [
+        "eGFR calculation",
+        "repeat when well hydrated",
+        "urine albumin to creatinine ratio"
+      ]
+    },
+    {
+      "direction": "low",
+      "meaning": "A low creatinine usually reflects low muscle mass rather than unusually good kidney function.",
+      "common_causes": [
+        "low muscle mass",
+        "pregnancy",
+        "prolonged illness"
+      ],
+      "typical_next_steps": [
+        "interpret alongside eGFR",
+        "no action needed in isolation"
+      ]
+    }
+  ],
+  "when_to_seek_help": "A creatinine that has risen sharply from your usual level, especially with reduced urine output, needs prompt assessment.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-CREATININE-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

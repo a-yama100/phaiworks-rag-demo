@@ -1,0 +1,51 @@
+{
+  "biomarker_name": "Folate",
+  "aliases": [
+    "serum folate",
+    "vitamin B9",
+    "folic acid"
+  ],
+  "category": "vitamin_mineral",
+  "keywords": [
+    "anaemia",
+    "tired",
+    "pregnancy",
+    "diet"
+  ],
+  "summary": "Folate works alongside B12 to make red blood cells and DNA. The two are tested together because treating a folate deficiency while missing a B12 deficiency can worsen nerve damage.",
+  "what_it_measures": "The concentration of folate in blood serum, reported in ug/L.",
+  "reference_ranges": [
+    {
+      "low": 3.9,
+      "unit": "ug/L",
+      "sex": "any",
+      "note": "below this is considered deficient"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "low",
+      "meaning": "A low folate causes an anaemia with large red cells, very similar to B12 deficiency, which is why B12 must always be checked before folate is replaced.",
+      "common_causes": [
+        "poor dietary intake",
+        "alcohol",
+        "coeliac disease",
+        "pregnancy"
+      ],
+      "typical_next_steps": [
+        "check B12 before treating",
+        "full blood count",
+        "dietary review"
+      ]
+    }
+  ],
+  "when_to_seek_help": "Folate should not be replaced without checking B12 first. If you are pregnant or planning pregnancy, discuss folic acid with your GP or midwife.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-FOLATE-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

@@ -1,0 +1,65 @@
+{
+  "biomarker_name": "Platelets",
+  "aliases": [
+    "platelet count",
+    "thrombocytes"
+  ],
+  "category": "haematology",
+  "keywords": [
+    "bleeding",
+    "bruising",
+    "blood count",
+    "clotting"
+  ],
+  "summary": "Platelets are the cell fragments that plug damaged blood vessels. Too few and you bruise and bleed easily; too many and clotting risk can rise.",
+  "what_it_measures": "The number of platelets per litre of blood, reported as x10^9/L.",
+  "reference_ranges": [
+    {
+      "low": 150.0,
+      "high": 400.0,
+      "unit": "x10^9/L",
+      "sex": "any"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "low",
+      "meaning": "A low platelet count increases bleeding and bruising risk. Below about 50 the risk becomes clinically important.",
+      "common_causes": [
+        "viral infection",
+        "immune thrombocytopenia",
+        "chronic liver disease",
+        "some medicines"
+      ],
+      "typical_next_steps": [
+        "repeat to exclude clumping artefact",
+        "blood film",
+        "haematology referral if persistent"
+      ]
+    },
+    {
+      "direction": "high",
+      "meaning": "A raised platelet count is most often a reaction to inflammation, infection or iron deficiency rather than a bone marrow problem.",
+      "common_causes": [
+        "inflammation or infection",
+        "iron deficiency",
+        "after surgery",
+        "myeloproliferative disease"
+      ],
+      "typical_next_steps": [
+        "ferritin",
+        "CRP",
+        "repeat once well"
+      ]
+    }
+  ],
+  "when_to_seek_help": "Unexplained bruising, bleeding gums, or a rash of tiny red spots that does not fade under pressure needs same-day assessment.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-PLATELETS-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

@@ -1,0 +1,64 @@
+{
+  "biomarker_name": "Serum Iron",
+  "aliases": [
+    "iron",
+    "serum Fe"
+  ],
+  "category": "haematology",
+  "keywords": [
+    "iron",
+    "anaemia",
+    "tired",
+    "fatigue"
+  ],
+  "summary": "Serum iron is the iron circulating in your blood at the moment of the sample. It swings widely through the day and after meals, so it is close to meaningless on its own — ferritin and transferrin saturation are what actually get interpreted.",
+  "what_it_measures": "The concentration of iron in blood serum, reported in micromol/L.",
+  "reference_ranges": [
+    {
+      "low": 7.0,
+      "high": 27.0,
+      "unit": "umol/L",
+      "sex": "any",
+      "note": "varies substantially through the day"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "low",
+      "meaning": "A low serum iron is consistent with iron deficiency but is not sufficient to diagnose it, because the level falls during any inflammation regardless of iron stores.",
+      "common_causes": [
+        "iron deficiency",
+        "inflammation",
+        "recent low iron intake"
+      ],
+      "typical_next_steps": [
+        "ferritin",
+        "transferrin saturation",
+        "CRP to check for inflammation"
+      ]
+    },
+    {
+      "direction": "high",
+      "meaning": "A raised serum iron can reflect supplements taken shortly before the test, or iron overload.",
+      "common_causes": [
+        "recent iron supplement",
+        "haemochromatosis",
+        "liver disease"
+      ],
+      "typical_next_steps": [
+        "transferrin saturation",
+        "ferritin",
+        "repeat fasting without supplements"
+      ]
+    }
+  ],
+  "when_to_seek_help": "Do not start or stop iron supplements based on serum iron alone. Ask for ferritin and transferrin saturation alongside it.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-SERUM-IRON-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

@@ -1,0 +1,66 @@
+{
+  "biomarker_name": "Calcium",
+  "aliases": [
+    "serum calcium",
+    "adjusted calcium",
+    "corrected calcium"
+  ],
+  "category": "vitamin_mineral",
+  "keywords": [
+    "bone",
+    "parathyroid",
+    "kidney stones",
+    "vitamin D"
+  ],
+  "summary": "Calcium in blood is tightly controlled by the parathyroid glands and vitamin D, and only a small fraction of body calcium is in the blood at all. Results are adjusted for albumin, because much of it travels bound to that protein.",
+  "what_it_measures": "The concentration of calcium in blood serum, adjusted for albumin, reported in mmol/L.",
+  "reference_ranges": [
+    {
+      "low": 2.2,
+      "high": 2.6,
+      "unit": "mmol/L",
+      "sex": "any",
+      "note": "albumin-adjusted"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "high",
+      "meaning": "A raised calcium most often comes from an overactive parathyroid gland. It can cause thirst, constipation, kidney stones and confusion.",
+      "common_causes": [
+        "primary hyperparathyroidism",
+        "malignancy",
+        "excess vitamin D supplementation"
+      ],
+      "typical_next_steps": [
+        "parathyroid hormone level",
+        "vitamin D",
+        "kidney function tests"
+      ]
+    },
+    {
+      "direction": "low",
+      "meaning": "A low calcium can cause tingling around the mouth and fingers, and cramps.",
+      "common_causes": [
+        "vitamin D deficiency",
+        "chronic kidney disease",
+        "underactive parathyroid",
+        "low magnesium"
+      ],
+      "typical_next_steps": [
+        "vitamin D",
+        "magnesium",
+        "parathyroid hormone"
+      ]
+    }
+  ],
+  "when_to_seek_help": "A calcium above 3.0 mmol/L, or any calcium abnormality with confusion, severe thirst or seizures, needs urgent medical assessment.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-CALCIUM-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

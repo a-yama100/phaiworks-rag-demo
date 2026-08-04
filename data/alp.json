@@ -1,0 +1,64 @@
+{
+  "biomarker_name": "ALP",
+  "aliases": [
+    "alkaline phosphatase",
+    "alk phos"
+  ],
+  "category": "liver",
+  "keywords": [
+    "liver",
+    "bile ducts",
+    "bone",
+    "liver enzymes"
+  ],
+  "summary": "ALP comes from both the bile ducts and bone, so a raised level asks a question before it answers one: liver or bone. GGT is the test that separates the two.",
+  "what_it_measures": "The activity of alkaline phosphatase in blood, reported in U/L.",
+  "reference_ranges": [
+    {
+      "low": 30.0,
+      "high": 130.0,
+      "unit": "U/L",
+      "sex": "any",
+      "note": "adult; higher in children and in pregnancy"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "high",
+      "meaning": "A raised ALP with a raised GGT points to the bile ducts. A raised ALP with a normal GGT points to bone instead.",
+      "common_causes": [
+        "bile duct obstruction",
+        "gallstones",
+        "Paget's disease of bone",
+        "vitamin D deficiency"
+      ],
+      "typical_next_steps": [
+        "GGT to localise the source",
+        "liver ultrasound if biliary",
+        "bone profile if skeletal"
+      ]
+    },
+    {
+      "direction": "low",
+      "meaning": "A low ALP is uncommon and usually incidental, though it occasionally reflects malnutrition or a rare inherited condition.",
+      "common_causes": [
+        "malnutrition",
+        "zinc deficiency",
+        "hypophosphatasia"
+      ],
+      "typical_next_steps": [
+        "repeat",
+        "review nutrition"
+      ]
+    }
+  ],
+  "when_to_seek_help": "A raised ALP with itching, pale stools or yellow eyes suggests a bile duct problem and should be reviewed promptly.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-ALP-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

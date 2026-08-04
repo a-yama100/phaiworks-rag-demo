@@ -1,0 +1,62 @@
+{
+  "biomarker_name": "Transferrin Saturation",
+  "aliases": [
+    "TSAT",
+    "iron saturation"
+  ],
+  "category": "haematology",
+  "keywords": [
+    "iron",
+    "anaemia",
+    "haemochromatosis",
+    "iron overload"
+  ],
+  "summary": "Transferrin saturation is the percentage of your iron-carrying capacity that is currently filled. It is the most useful single number for iron overload, and it complements ferritin for deficiency.",
+  "what_it_measures": "A calculated percentage: serum iron divided by total iron binding capacity.",
+  "reference_ranges": [
+    {
+      "low": 20.0,
+      "high": 45.0,
+      "unit": "%",
+      "sex": "any"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "low",
+      "meaning": "A low saturation supports iron deficiency, and unlike ferritin it is not pushed up by inflammation, so it stays informative when someone is unwell.",
+      "common_causes": [
+        "iron deficiency",
+        "blood loss",
+        "poor absorption"
+      ],
+      "typical_next_steps": [
+        "ferritin",
+        "investigate source of blood loss"
+      ]
+    },
+    {
+      "direction": "high",
+      "meaning": "A saturation above about 45 percent, especially with a high ferritin, raises the possibility of iron overload.",
+      "common_causes": [
+        "haemochromatosis",
+        "repeated transfusions",
+        "iron supplements"
+      ],
+      "typical_next_steps": [
+        "repeat fasting",
+        "HFE genetic testing",
+        "specialist referral"
+      ]
+    }
+  ],
+  "when_to_seek_help": "A persistently high transferrin saturation should be investigated, as untreated iron overload can damage the liver, heart and pancreas.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-TRANSFERRIN-SATURATION-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

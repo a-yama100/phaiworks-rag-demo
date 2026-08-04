@@ -1,0 +1,70 @@
+{
+  "biomarker_name": "Haemoglobin",
+  "aliases": [
+    "Hb",
+    "hemoglobin"
+  ],
+  "category": "haematology",
+  "keywords": [
+    "anaemia",
+    "tired",
+    "fatigue",
+    "blood count"
+  ],
+  "summary": "Haemoglobin is the protein in red cells that carries oxygen. A low level is what the word anaemia actually means, and it is the most common abnormal result on a full blood count.",
+  "what_it_measures": "The concentration of haemoglobin in blood, reported in g/L.",
+  "reference_ranges": [
+    {
+      "low": 120.0,
+      "high": 150.0,
+      "unit": "g/L",
+      "sex": "female"
+    },
+    {
+      "low": 130.0,
+      "high": 170.0,
+      "unit": "g/L",
+      "sex": "male"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "low",
+      "meaning": "A low haemoglobin means anaemia. The next question is always why, and the red cell size (MCV) is what narrows it down.",
+      "common_causes": [
+        "iron deficiency",
+        "vitamin B12 or folate deficiency",
+        "chronic disease",
+        "blood loss"
+      ],
+      "typical_next_steps": [
+        "MCV to classify the anaemia",
+        "ferritin",
+        "B12 and folate"
+      ]
+    },
+    {
+      "direction": "high",
+      "meaning": "A raised haemoglobin can reflect dehydration, smoking, or less commonly the bone marrow producing too many red cells.",
+      "common_causes": [
+        "dehydration",
+        "smoking",
+        "sleep apnoea",
+        "polycythaemia"
+      ],
+      "typical_next_steps": [
+        "repeat when well hydrated",
+        "full blood count review"
+      ]
+    }
+  ],
+  "when_to_seek_help": "Anaemia with chest pain, breathlessness at rest or fainting needs urgent assessment.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-HAEMOGLOBIN-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}

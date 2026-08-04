@@ -1,0 +1,49 @@
+{
+  "biomarker_name": "eGFR",
+  "aliases": [
+    "estimated glomerular filtration rate",
+    "GFR"
+  ],
+  "category": "kidney",
+  "keywords": [
+    "kidney",
+    "renal function",
+    "chronic kidney disease"
+  ],
+  "summary": "eGFR is not measured directly. It is calculated from creatinine, age and sex to estimate how much blood your kidneys filter per minute, which makes it easier to interpret than creatinine alone.",
+  "what_it_measures": "A calculated estimate of kidney filtration, reported in mL/min/1.73m2.",
+  "reference_ranges": [
+    {
+      "low": 90.0,
+      "unit": "mL/min/1.73m2",
+      "sex": "any",
+      "note": "normal kidney function"
+    }
+  ],
+  "interpretations": [
+    {
+      "direction": "low",
+      "meaning": "A reduced eGFR means the kidneys are filtering less than expected. Values persistently below 60 for more than three months define chronic kidney disease; a single low reading may just reflect dehydration.",
+      "common_causes": [
+        "chronic kidney disease",
+        "dehydration",
+        "acute kidney injury",
+        "some medicines"
+      ],
+      "typical_next_steps": [
+        "repeat in 3 months to confirm",
+        "urine albumin to creatinine ratio",
+        "medication review"
+      ]
+    }
+  ],
+  "when_to_seek_help": "A single low eGFR is not a diagnosis. It needs repeating before it means anything — discuss the trend with your GP.",
+  "status": "clinically_approved",
+  "source_brief_id": "BRIEF-EGFR-001",
+  "approved_by": "Demo dataset (illustrative values, not for clinical use)",
+  "approval_date": "2026-08-05",
+  "last_updated": "2026-08-05",
+  "language": "en-GB",
+  "region": "UK",
+  "schema_version": "1.0.0"
+}
