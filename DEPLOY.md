@@ -75,6 +75,28 @@ A 502 from `/api/ask` means the proxy could not reach the function, or the share
 does not match. The real cause is in the Vercel function logs; the browser only ever sees
 a generic message, on purpose.
 
+### Two things that will waste an afternoon if they are not already in place
+
+Both were hit on the first production deploy. Both look like the backend is broken when it
+is not.
+
+**The rewrite in `next.config.ts` is load-bearing.** Without
+`/api/py/:path* → /api/`, Next.js owns every path under `/api` and answers
+`/api/py/health` with its own 404 page. The function deploys correctly and is simply never
+reached, which is indistinguishable from a failed deployment unless you check the build
+log and see it succeeded.
+
+**Do not address the backend with `VERCEL_URL`.** It resolves to the per-deployment
+`*.vercel.app` hostname, which Deployment Protection answers with a 302 to an auth page.
+The proxy's request is redirected, `res.ok` is false, and every question returns "the
+retrieval service is unavailable" — while `/api/py/health` returns 200 the whole time and
+the backend is perfectly healthy. `BACKEND_URL` is set to the custom domain for this
+reason; the code falls back to `VERCEL_PROJECT_PRODUCTION_URL`, never `VERCEL_URL`.
+
+The useful diagnostic for both: call `/api/py/health` and `/api/py/ask` directly. If
+health is 200 and a keyless `/api/py/ask` is 401, the backend is fine and the problem is
+between the proxy and it.
+
 ### The honest caveat
 
 In this shape the Next.js runtime and the Python function share one project environment,
