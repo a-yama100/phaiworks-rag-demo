@@ -5,8 +5,8 @@ FROM python:3.11-slim
 WORKDIR /srv
 
 # Dependencies first so a code change does not reinstall the whole tree.
-COPY api/requirements.txt ./api/requirements.txt
-RUN pip install --no-cache-dir -r api/requirements.txt
+COPY requirements.txt ./requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # data/ lives at the repo root and is shared with the frontend, so the build context
 # is the repo root rather than api/.
@@ -22,4 +22,4 @@ EXPOSE 8000
 #
 # Single worker: BM25 and the corpus are held in process memory, so every extra worker
 # is another full copy of both. Scale with instances rather than workers.
-CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
+CMD ["sh", "-c", "uvicorn rag.main:app --host 0.0.0.0 --port ${PORT:-8000}"]

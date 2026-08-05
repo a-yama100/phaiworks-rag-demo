@@ -46,7 +46,7 @@ Next.js on Vercel ──────── holds NO provider keys
    │
    │ HTTP
    ▼
-FastAPI (api/) ─────────── holds PINECONE_API_KEY + the provider key
+FastAPI (api/index.py) ─── holds PINECONE_API_KEY + the provider key
    │
    └── LangGraph agent
          │
@@ -63,10 +63,21 @@ FastAPI (api/) ─────────── holds PINECONE_API_KEY + the pr
          └─ END
 ```
 
-The frontend/backend split is not architectural decoration. The public deployment has no
-API key in its environment, so there is nothing for a frontend bug, a mis-scoped
-environment variable or a leaked build log to expose, and rotating a provider key never
-touches the site.
+The split is not decoration: the browser never receives a key, the Next.js code never
+reads one, and rate limiting happens before anything crosses the network to a paid API.
+
+How complete that isolation is depends on where the backend runs, and the honest version
+matters more than the flattering one. Deployed as a container it is a separate process
+with its own environment — the frontend genuinely holds nothing. Co-deployed as a Vercel
+Python function, which is the cheaper shape and the one currently used, the two share one
+project environment: the keys are present in the Next.js runtime even though nothing there
+touches them. Both shapes are in [`DEPLOY.md`](DEPLOY.md), and switching is one
+environment variable.
+
+The shared secret between proxy and backend is what stops the second one from being a free
+pass: without it, anyone who finds the function URL calls the pipeline directly and skips
+the rate limit, which is the only thing standing between a public page and the provider
+bill.
 
 ---
 
@@ -109,7 +120,7 @@ demo page exposes the same toggle.
 **The cost of keeping RRF available:** its output is a rank artefact with no absolute
 meaning, so it cannot answer *"is anything here actually relevant?"*. The refusal decision
 therefore runs on the raw cosine score of the best dense hit, never on the fused score —
-see `best_dense_score()` in [`api/app/retrieval.py`](api/app/retrieval.py) and the test
+see `best_dense_score()` in [`api/rag/retrieval.py`](api/rag/retrieval.py) and the test
 that pins it.
 
 ### BM25 written directly on `rank_bm25`
@@ -121,7 +132,7 @@ measuring a correct implementation, or the conclusion would have been about the 
 It was replaced for two reasons: `langchain-community` is being sunset, and that
 retriever has no metadata filter — you rank the whole corpus and discard afterwards,
 which means asking for *k* documents silently returns fewer than *k* once the filter
-runs. [`api/app/bm25.py`](api/app/bm25.py) filters first, so `k` means what it says.
+runs. [`api/rag/bm25.py`](api/rag/bm25.py) filters first, so `k` means what it says.
 
 The tokenizer is deliberately not the default one: it keeps `hba1c` as a single token
 instead of splitting it into `hba`, `1`, `c`. Biomarker names are full of digits, and
@@ -316,7 +327,6 @@ documents, and a broken citation check still returns a fluent answer:
 
 ```bash
 cd api
-pip install -r requirements-dev.txt
 .venv/Scripts/python.exe -m pytest tests -q     # 27 passing
 ```
 
@@ -334,11 +344,11 @@ silent, and the first symptom of losing it would be the provider bill.
 # backend
 cd api
 python -m venv .venv && .venv/Scripts/activate
-pip install -r requirements.txt
+pip install -r requirements-dev.txt
 cp .env.example .env                  # PINECONE_API_KEY + one provider key
 python ingest.py --dry-run            # validate the corpus, no keys or network needed
 python ingest.py                      # create the index, embed, upsert
-uvicorn app.main:app --port 8000
+uvicorn rag.main:app --app-dir . --port 8000
 
 # frontend, in another shell
 npm install
@@ -356,21 +366,30 @@ unchanged entries — editing one brief costs one embedding call, not 52.
 
 | Path | Role |
 |---|---|
-| `api/schema/biomarker.py` | The schema. Validation, deterministic ids, `embedding_text`, metadata |
-| `api/app/corpus.py` | Loading and the validation gate; fails with the offending filename |
-| `api/app/retrieval.py` | Dense + BM25 + reciprocal rank fusion |
-| `api/app/bm25.py` | BM25 on `rank_bm25`, filtering before ranking |
-| `api/app/graph.py` | The LangGraph state machine |
-| `api/app/generate.py` | Citation-enforced generation |
-| `api/app/cost.py` | Per-query cost, computed rather than described |
-| `api/app/settings.py` | Every tunable knob, in one place |
+| `api/index.py` | Deployment entry point. Re-exports the app; deliberately trivial |
+| `api/rag/schema/biomarker.py` | The schema. Validation, deterministic ids, `embedding_text`, metadata |
+| `api/rag/corpus.py` | Loading and the validation gate; fails with the offending filename |
+| `api/rag/retrieval.py` | Dense + BM25 + reciprocal rank fusion |
+| `api/rag/bm25.py` | BM25 on `rank_bm25`, filtering before ranking |
+| `api/rag/graph.py` | The LangGraph state machine |
+| `api/rag/generate.py` | Citation-enforced generation |
+| `api/rag/main.py` | FastAPI surface and the shared-secret gate |
+| `api/rag/cost.py` | Per-query cost, computed rather than described |
+| `api/rag/settings.py` | Every tunable knob, in one place |
 | `api/ingest.py` | Validate → embed → idempotent upsert |
 | `api/eval/` | Gold set and the evaluation harness |
 | `api/tests/` | Offline test suite |
 | `data/*.json` | 52 briefs across 10 categories |
 | `app/`, `components/`, `lib/` | Next.js frontend: proxy, trace panel, evals page |
-| `render.yaml`, `api/Dockerfile` | Backend deployment |
+| `vercel.json`, `requirements.txt` | Backend as a Vercel Python function |
+| `render.yaml`, `api/Dockerfile` | Backend as a container, the alternative shape |
 | [`DEPLOY.md`](DEPLOY.md) | Deployment runbook, in the order the steps have to happen |
+
+The Python package is `rag`, not `app`. The repository root holds a Next.js `app/`
+directory, and Python 3 would treat that as a namespace package — an `import app` from the
+deployed function could resolve to the frontend's source tree depending on path order.
+Renaming removes the ambiguity rather than relying on `sys.path` ordering to survive
+whoever edits the imports next.
 
 There is exactly one implementation of the pipeline. An earlier version had a second copy
 of ingest in JavaScript so the Next.js app could populate the index itself, which meant

@@ -15,10 +15,10 @@ from fastapi import Depends, FastAPI, Header, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
-from app.cost import query_cost
-from app.corpus import retrievable_documents
-from app.graph import ask
-from app.settings import (
+from rag.cost import query_cost
+from rag.corpus import retrievable_documents
+from rag.graph import ask
+from rag.settings import (
     ALLOWED_ORIGINS,
     CATEGORIES,
     CHAT_MODEL,
@@ -30,10 +30,23 @@ from app.settings import (
     TOP_K,
 )
 
+# Every route carries this prefix, in both deployment shapes.
+#
+# On Vercel, api/index.py is the catch-all for /api/* that Next.js has not already
+# claimed, and the path the function receives is the full one — so FastAPI has to declare
+# it. Locally under uvicorn the prefix is simply part of the path. Keeping it identical in
+# both means the proxy builds one URL and never branches on environment.
+API_PREFIX = "/api/py"
+
 app = FastAPI(
     title="Clinical KB RAG API",
-    description="Hybrid retrieval + LangGraph agent with citation-enforced generation.",
+    description="Retrieval + LangGraph agent with citation-enforced generation.",
     version="2.0.0",
+    docs_url=f"{API_PREFIX}/docs",
+    openapi_url=f"{API_PREFIX}/openapi.json",
+    # Off: it defaults to an unprefixed /redoc, which would be routed by Next.js and 404
+    # in production while working locally — a confusing thing to leave lying around.
+    redoc_url=None,
 )
 
 app.add_middleware(
@@ -71,12 +84,12 @@ class AskRequest(BaseModel):
     mode: str | None = None
 
 
-@app.get("/health")
+@app.get(f"{API_PREFIX}/health")
 def health() -> dict:
     return {"ok": True, "briefs": len(retrievable_documents())}
 
 
-@app.get("/meta")
+@app.get(f"{API_PREFIX}/meta")
 def meta() -> dict:
     """Configuration the frontend renders, so the two never drift apart in the copy."""
     return {
@@ -92,7 +105,7 @@ def meta() -> dict:
     }
 
 
-@app.post("/ask", dependencies=[Depends(require_api_key)])
+@app.post(f"{API_PREFIX}/ask", dependencies=[Depends(require_api_key)])
 def ask_endpoint(req: AskRequest) -> dict:
     category = req.category if req.category in CATEGORIES else None
     if req.mode not in (None, "hybrid", "dense"):

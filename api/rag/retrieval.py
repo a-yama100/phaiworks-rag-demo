@@ -19,9 +19,9 @@ from langchain_core.embeddings import Embeddings
 from langchain_pinecone import PineconeVectorStore
 from pinecone import Pinecone
 
-from app.bm25 import FilteredBM25Retriever
-from app.corpus import matches_filter, retrievable_documents
-from app.settings import (
+from rag.bm25 import FilteredBM25Retriever
+from rag.corpus import matches_filter, retrievable_documents
+from rag.settings import (
     ALLOWED_LANGUAGE,
     BM25_WEIGHT,
     CANDIDATE_K,

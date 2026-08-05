@@ -1,0 +1,33 @@
+# Production dependencies for the Python backend.
+#
+# At the repository root because that is where Vercel's Python runtime looks. Kept
+# deliberately lean: a serverless bundle has a size ceiling, and this set measures ~174MB
+# installed against a 250MB limit. Everything below is imported at runtime by the
+# configured default path (Gemini embeddings + Gemini generation).
+#
+# Not here on purpose:
+#   langchain        - never imported; only langchain-core is
+#   langchain-community - replaced by rag/bm25.py, and it is being sunset
+#   openai, anthropic   - alternative providers, imported lazily inside their branch in
+#                         rag/retrieval.py and rag/generate.py. Install them (see
+#                         api/requirements-dev.txt) only if you switch EMBED_PROVIDER or
+#                         CHAT_PROVIDER, and expect ~30MB more in the bundle.
+#   PyYAML, pytest      - eval harness and tests, neither of which is deployed
+
+langchain-core>=1.0
+langchain-pinecone>=0.2
+langchain-google-genai>=2.0
+langgraph>=1.0
+pinecone>=5.0
+
+# BM25 is implemented on this directly in rag/bm25.py rather than pulled from
+# langchain-community, which cannot filter before ranking.
+rank-bm25>=0.2.2
+
+fastapi>=0.115
+pydantic>=2.6
+python-dotenv>=1.0
+
+# Only used when running the app under its own server (locally, or the container image).
+# Vercel supplies the ASGI server itself.
+uvicorn>=0.30

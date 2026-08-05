@@ -14,7 +14,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # --- paths -------------------------------------------------------------------
-# api/app/settings.py -> api/app -> api -> repo root
+# api/rag/settings.py -> api/app -> api -> repo root
 REPO_ROOT = Path(__file__).resolve().parents[2]
 DATA_DIR = Path(os.getenv("DATA_DIR") or REPO_ROOT / "data")
 EVAL_DIR = REPO_ROOT / "api" / "eval"
@@ -51,7 +51,7 @@ CHAT_MODEL = os.getenv("CHAT_MODEL", _CHAT_DEFAULTS.get(CHAT_PROVIDER, "gemini-2
 # USD per 1M tokens, so the UI can show a measured cost rather than calling it cheap.
 # These are configured list prices, not something the code discovers: they must be
 # updated when a provider changes pricing. A model missing from this table reports no
-# cost rather than a made-up one — see app/cost.py.
+# cost rather than a made-up one — see rag/cost.py.
 PRICE_PER_MTOK = {
     "gpt-4o-mini": {"in": 0.15, "out": 0.60},
     "text-embedding-3-small": {"in": 0.02, "out": 0.0},

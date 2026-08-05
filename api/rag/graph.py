@@ -25,9 +25,9 @@ from typing import Annotated, Literal, TypedDict
 from langchain_core.prompts import ChatPromptTemplate
 from langgraph.graph import END, StateGraph
 
-from app.generate import generate, get_chat_model
-from app.retrieval import Hit, best_dense_score, retrieve
-from app.settings import MAX_REWRITES, MIN_SCORE, RETRIEVAL_MODE, TOP_K
+from rag.generate import generate, get_chat_model
+from rag.retrieval import Hit, best_dense_score, retrieve
+from rag.settings import MAX_REWRITES, MIN_SCORE, RETRIEVAL_MODE, TOP_K
 
 
 def _append(left: list, right: list) -> list:

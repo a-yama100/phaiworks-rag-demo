@@ -40,14 +40,14 @@ import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from app.retrieval import (  # noqa: E402
+from rag.retrieval import (  # noqa: E402
     Hit,
     best_dense_score,
     dense_search,
     reciprocal_rank_fusion,
     sparse_search,
 )
-from app.settings import (  # noqa: E402
+from rag.settings import (  # noqa: E402
     BM25_WEIGHT,
     CHAT_MODEL,
     EMBED_MODEL,
@@ -228,7 +228,7 @@ def score_generation(cases: list[dict]) -> dict:
     out-of-scope cases here are squarely on topic (asking for a diagnosis, a drug dose,
     a product recommendation). Those can only be declined at generation time.
     """
-    from app.graph import ask
+    from rag.graph import ask
 
     checked = answered = cited_expected = 0
     oos_total = oos_refused = 0

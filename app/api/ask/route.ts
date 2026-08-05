@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { rateLimit } from "@/lib/ratelimit";
-import { BACKEND_URL, CATEGORIES, MAX_QUESTION_LEN } from "@/lib/config";
+import { BACKEND_PREFIX, BACKEND_URL, CATEGORIES, MAX_QUESTION_LEN } from "@/lib/config";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -54,7 +54,7 @@ export async function POST(req: NextRequest) {
     const headers: Record<string, string> = { "Content-Type": "application/json" };
     if (process.env.BACKEND_API_KEY) headers["X-API-Key"] = process.env.BACKEND_API_KEY;
 
-    const res = await fetch(`${BACKEND_URL}/ask`, {
+    const res = await fetch(`${BACKEND_URL}${BACKEND_PREFIX}/ask`, {
       method: "POST",
       headers,
       body: JSON.stringify({ question, category, mode }),

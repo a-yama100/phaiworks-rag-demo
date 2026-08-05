@@ -25,8 +25,8 @@ from langchain_core.language_models import BaseChatModel
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
 
-from app.retrieval import Hit
-from app.settings import CHAT_MODEL, CHAT_PROVIDER, require
+from rag.retrieval import Hit
+from rag.settings import CHAT_MODEL, CHAT_PROVIDER, require
 
 SYSTEM_PROMPT = """You answer questions about blood tests using ONLY the approved briefs supplied below.
 

@@ -1,4 +1,13 @@
--r requirements.txt
+# Everything production needs, plus what is only needed to test and evaluate.
+-r ../requirements.txt
 
-# The README tells you to run pytest; this is what makes that work.
 pytest>=8.0
+
+# The eval harness reads gold.yaml.
+PyYAML>=6.0
+
+# The alternative providers. Not in the production set because the deployed
+# configuration is Gemini and every megabyte counts against the serverless bundle limit;
+# install these to run with EMBED_PROVIDER=openai or CHAT_PROVIDER=anthropic.
+langchain-openai>=1.0
+langchain-anthropic>=0.3

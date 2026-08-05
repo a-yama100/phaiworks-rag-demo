@@ -3,5 +3,11 @@
     "deploymentEnabled": {
       "main": true
     }
+  },
+  "functions": {
+    "api/index.py": {
+      "includeFiles": "{data/**,api/rag/**}",
+      "maxDuration": 60
+    }
   }
 }

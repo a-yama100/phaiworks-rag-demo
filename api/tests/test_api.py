@@ -11,7 +11,7 @@ from __future__ import annotations
 import pytest
 from fastapi.testclient import TestClient
 
-from app import main
+from rag import main
 
 
 @pytest.fixture
@@ -21,12 +21,12 @@ def client(monkeypatch):
 
 
 def test_ask_rejects_missing_key(client):
-    r = client.post("/ask", json={"question": "what is HbA1c"})
+    r = client.post("/api/py/ask", json={"question": "what is HbA1c"})
     assert r.status_code == 401
 
 
 def test_ask_rejects_wrong_key(client):
-    r = client.post("/ask", json={"question": "what is HbA1c"}, headers={"X-API-Key": "nope"})
+    r = client.post("/api/py/ask", json={"question": "what is HbA1c"}, headers={"X-API-Key": "nope"})
     assert r.status_code == 401
 
 
@@ -48,7 +48,7 @@ def test_ask_accepts_correct_key(client, monkeypatch):
         },
     )
     r = client.post(
-        "/ask",
+        "/api/py/ask",
         json={"question": "what is HbA1c"},
         headers={"X-API-Key": "correct-horse-battery-staple"},
     )
@@ -71,19 +71,19 @@ def test_gate_is_open_when_no_secret_is_configured(monkeypatch):
             "total_ms": 1,
         },
     )
-    r = TestClient(main.app).post("/ask", json={"question": "anything"})
+    r = TestClient(main.app).post("/api/py/ask", json={"question": "anything"})
     assert r.status_code == 200
 
 
 def test_health_needs_no_key(client):
-    r = client.get("/health")
+    r = client.get("/api/py/health")
     assert r.status_code == 200
     assert r.json()["briefs"] == 52
 
 
 def test_meta_reports_the_shipped_configuration(client):
     """The page renders these, so a drift between copy and pipeline shows up here."""
-    body = client.get("/meta").json()
+    body = client.get("/api/py/meta").json()
     assert body["retrieval_mode"] == "dense"
     assert body["brief_count"] == 52
     assert 0 < body["min_score"] < 1

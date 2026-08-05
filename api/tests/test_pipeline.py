@@ -17,10 +17,10 @@ from pathlib import Path
 import pytest
 from langchain_core.documents import Document
 
-from app.bm25 import FilteredBM25Retriever, tokenize
-from app.corpus import CorpusError, load_briefs, load_documents, matches_filter
-from app.retrieval import Hit, best_dense_score, reciprocal_rank_fusion
-from app.settings import CATEGORIES
+from rag.bm25 import FilteredBM25Retriever, tokenize
+from rag.corpus import CorpusError, load_briefs, load_documents, matches_filter
+from rag.retrieval import Hit, best_dense_score, reciprocal_rank_fusion
+from rag.settings import CATEGORIES
 
 DATA_DIR = Path(__file__).resolve().parents[2] / "data"
 
@@ -152,7 +152,7 @@ def test_best_dense_score_ignores_sparse_only_hits():
 
 
 def test_generation_rejects_citations_that_were_not_retrieved(monkeypatch):
-    from app import generate as gen
+    from rag import generate as gen
 
     retrieved = Hit(
         doc=Document(
@@ -182,7 +182,7 @@ def test_generation_rejects_citations_that_were_not_retrieved(monkeypatch):
 
 def test_generation_accepts_citations_that_were_retrieved(monkeypatch):
     """The mirror of the test above: a well-behaved model must not be refused."""
-    from app import generate as gen
+    from rag import generate as gen
 
     retrieved = Hit(
         doc=Document(
@@ -211,7 +211,7 @@ def test_generation_accepts_citations_that_were_retrieved(monkeypatch):
 
 
 def test_generation_refuses_when_model_declines(monkeypatch):
-    from app import generate as gen
+    from rag import generate as gen
 
     retrieved = Hit(
         doc=Document(id="x", page_content="", metadata={"source_brief_id": "B1", "answer_text": "…"})
@@ -229,7 +229,7 @@ def test_generation_refuses_when_model_declines(monkeypatch):
 
 
 def test_generation_refuses_without_evidence():
-    from app.generate import generate
+    from rag.generate import generate
 
     result = generate("anything", [])
     assert result.grounded is False
@@ -240,15 +240,15 @@ def test_generation_refuses_without_evidence():
 
 
 def test_grade_routes_to_generate_when_evidence_is_strong():
-    from app.graph import after_grade
-    from app.settings import MIN_SCORE
+    from rag.graph import after_grade
+    from rag.settings import MIN_SCORE
 
     assert after_grade({"evidence_score": MIN_SCORE + 0.1, "attempts": 0}) == "generate"
 
 
 def test_grade_spends_a_rewrite_before_refusing():
-    from app.graph import after_grade
-    from app.settings import MAX_REWRITES, MIN_SCORE
+    from rag.graph import after_grade
+    from rag.settings import MAX_REWRITES, MIN_SCORE
 
     weak = {"evidence_score": MIN_SCORE - 0.1, "attempts": 0}
     assert after_grade(weak) == "rewrite"
@@ -257,8 +257,8 @@ def test_grade_spends_a_rewrite_before_refusing():
 
 
 def test_ungrounded_generation_retries_then_refuses():
-    from app.graph import after_generate
-    from app.settings import MAX_REWRITES
+    from rag.graph import after_generate
+    from rag.settings import MAX_REWRITES
 
     assert after_generate({"refused": True, "attempts": 0}) == "rewrite"
     assert after_generate({"refused": True, "attempts": MAX_REWRITES}) == "refuse"
@@ -267,6 +267,6 @@ def test_ungrounded_generation_retries_then_refuses():
 
 def test_graph_compiles():
     """Catches a malformed edge set without needing a key to invoke it."""
-    from app.graph import build_graph
+    from rag.graph import build_graph
 
     assert build_graph() is not None

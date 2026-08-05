@@ -15,7 +15,7 @@ services:
     # a demo nobody has clicked yet and bad for one linked from a job application —
     # a reviewer gives it fifteen seconds. Move to starter before the link goes out.
     plan: free
-    healthCheckPath: /health
+    healthCheckPath: /api/py/health
     envVars:
       # sync: false means "prompt me, do not store it in the repo".
       - key: PINECONE_API_KEY

@@ -13,8 +13,8 @@ from pathlib import Path
 
 from langchain_core.documents import Document
 
-from app.settings import ALLOWED_LANGUAGE, DATA_DIR, REQUIRED_STATUS
-from schema.biomarker import BiomarkerBrief, load_brief
+from rag.settings import ALLOWED_LANGUAGE, DATA_DIR, REQUIRED_STATUS
+from rag.schema.biomarker import BiomarkerBrief, load_brief
 
 
 class CorpusError(RuntimeError):

@@ -17,8 +17,8 @@ import argparse
 import sys
 from pathlib import Path
 
-from app.corpus import load_briefs
-from app.settings import (
+from rag.corpus import load_briefs
+from rag.settings import (
     EMBED_DIM,
     INDEX_NAME,
     NAMESPACE,
@@ -26,7 +26,7 @@ from app.settings import (
     PINECONE_REGION,
     require,
 )
-from schema.biomarker import BiomarkerBrief, load_brief
+from rag.schema.biomarker import BiomarkerBrief, load_brief
 
 
 def _ensure_index(pc) -> None:
@@ -93,8 +93,8 @@ def main(argv: list[str]) -> int:
     from langchain_pinecone import PineconeVectorStore
     from pinecone import Pinecone
 
-    from app.corpus import brief_to_document
-    from app.retrieval import get_embeddings
+    from rag.corpus import brief_to_document
+    from rag.retrieval import get_embeddings
 
     pc = Pinecone(api_key=require("PINECONE_API_KEY"))
     _ensure_index(pc)

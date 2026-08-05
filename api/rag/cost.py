@@ -9,7 +9,7 @@ three weeks later on an invoice.
 
 from __future__ import annotations
 
-from app.settings import CHAT_MODEL, EMBED_MODEL, PRICE_PER_MTOK
+from rag.settings import CHAT_MODEL, EMBED_MODEL, PRICE_PER_MTOK
 
 # One embedding call per retrieval; the query is short. Measuring it exactly would cost
 # another tokeniser dependency for a figure four decimal places below the chat cost, so
