@@ -3,14 +3,23 @@
 // MIN_SCORE here would eventually leave the page describing a threshold the pipeline no
 // longer uses, which is worse than not describing it at all.
 
-// Where the Python backend lives. Three cases, in priority order:
-//   1. BACKEND_URL set        — a separately hosted backend (container, other project)
-//   2. VERCEL_URL present     — co-deployed in this project as api/index.py, so the
-//                               backend is this same deployment and needs no config
-//   3. neither                — local development, uvicorn on 8000
+// Where the Python backend lives, in priority order:
+//   1. BACKEND_URL                     — set explicitly; a separately hosted backend, or
+//                                        the co-deployed one addressed by its real domain
+//   2. VERCEL_PROJECT_PRODUCTION_URL   — the project's production domain
+//   3. localhost                       — development, uvicorn on 8000
+//
+// Note what is NOT used: VERCEL_URL. It resolves to the per-deployment *.vercel.app
+// hostname, which Deployment Protection answers with a 302 to an auth page — so the
+// proxy's own request to the backend gets redirected, `res.ok` is false, and every
+// question comes back as "the retrieval service is unavailable" while the backend is
+// healthy and directly reachable the whole time. Found in production; the health check
+// passed and only the proxied path failed.
 export const BACKEND_URL =
   process.env.BACKEND_URL ||
-  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:8000");
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : "http://localhost:8000");
 
 // Matches API_PREFIX in api/rag/main.py. The Python function is the catch-all for the
 // /api/* paths Next.js has not claimed, so its routes carry the full path.
