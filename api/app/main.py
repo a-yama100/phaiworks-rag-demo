@@ -8,7 +8,10 @@ touches the frontend.
 
 from __future__ import annotations
 
-from fastapi import FastAPI, HTTPException
+import hmac
+import os
+
+from fastapi import Depends, FastAPI, Header, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
@@ -41,6 +44,26 @@ app.add_middleware(
 )
 
 
+def require_api_key(x_api_key: str | None = Header(default=None)) -> None:
+    """
+    Shared secret between the Next.js proxy and this service.
+
+    Opt-in: with BACKEND_API_KEY unset this is a no-op, so local development needs no
+    setup. Set it in both places in production and the backend URL stops being useful to
+    anyone who finds it — otherwise the rate limit in the proxy is trivially bypassed by
+    calling this service directly, and it is the only thing standing between a public
+    URL and the provider bill.
+
+    compare_digest rather than ==, so a wrong key cannot be recovered one character at a
+    time from response timings.
+    """
+    expected = os.getenv("BACKEND_API_KEY")
+    if not expected:
+        return
+    if not x_api_key or not hmac.compare_digest(x_api_key, expected):
+        raise HTTPException(status_code=401, detail="Invalid or missing API key")
+
+
 class AskRequest(BaseModel):
     question: str = Field(..., min_length=1, max_length=MAX_QUESTION_LEN)
     category: str | None = None
@@ -69,7 +92,7 @@ def meta() -> dict:
     }
 
 
-@app.post("/ask")
+@app.post("/ask", dependencies=[Depends(require_api_key)])
 def ask_endpoint(req: AskRequest) -> dict:
     category = req.category if req.category in CATEGORIES else None
     if req.mode not in (None, "hybrid", "dense"):

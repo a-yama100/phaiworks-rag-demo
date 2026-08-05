@@ -1,0 +1,4 @@
+-r requirements.txt
+
+# The README tells you to run pytest; this is what makes that work.
+pytest>=8.0

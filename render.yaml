@@ -1,0 +1,38 @@
+# Render blueprint for the Python backend. The Next.js frontend stays on Vercel and
+# proxies here, so this is the only service holding provider keys.
+#
+# Build context is the repository root, not api/, because the Dockerfile copies data/
+# as well — the corpus is shared with the frontend and lives at the top level.
+
+services:
+  - type: web
+    name: rag-demo-api
+    runtime: docker
+    dockerfilePath: ./api/Dockerfile
+    dockerContext: .
+    region: singapore
+    # free spins down after inactivity and takes ~50s to wake. That is survivable for
+    # a demo nobody has clicked yet and bad for one linked from a job application —
+    # a reviewer gives it fifteen seconds. Move to starter before the link goes out.
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      # sync: false means "prompt me, do not store it in the repo".
+      - key: PINECONE_API_KEY
+        sync: false
+      - key: GOOGLE_API_KEY
+        sync: false
+      # Shared secret with the Vercel proxy. Without it the public backend URL can be
+      # called directly, bypassing the frontend rate limit.
+      - key: BACKEND_API_KEY
+        generateValue: true
+      - key: PINECONE_INDEX
+        value: clinical-kb-gemini
+      - key: EMBED_PROVIDER
+        value: google
+      - key: CHAT_PROVIDER
+        value: google
+      - key: ALLOWED_ORIGINS
+        value: https://rag-demo.phaiworks.com
+      - key: PYTHONUNBUFFERED
+        value: "1"

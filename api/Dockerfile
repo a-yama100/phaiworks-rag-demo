@@ -16,6 +16,10 @@ COPY api ./api
 WORKDIR /srv/api
 
 EXPOSE 8000
+# Shell form so ${PORT} expands: most container hosts assign the port at runtime and
+# health-check the one they assigned. Hardcoding 8000 passes locally and then fails
+# deployment health checks for reasons the logs do not make obvious.
+#
 # Single worker: BM25 and the corpus are held in process memory, so every extra worker
-# is another full copy. Scale with instances rather than workers.
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# is another full copy of both. Scale with instances rather than workers.
+CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}"]

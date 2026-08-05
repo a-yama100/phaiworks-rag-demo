@@ -316,12 +316,15 @@ documents, and a broken citation check still returns a fluent answer:
 
 ```bash
 cd api
-.venv/Scripts/python.exe -m pytest tests -q     # 21 passing
+pip install -r requirements-dev.txt
+.venv/Scripts/python.exe -m pytest tests -q     # 27 passing
 ```
 
 Covered: the schema validation gate, vector-id collisions, `content_hash` stability,
 governance fields staying out of the vector, the tokenizer, BM25 filter ordering, RRF
-arithmetic, citation rejection and acceptance, and every branch of the graph's routing.
+arithmetic, citation rejection and acceptance, every branch of the graph's routing, and
+the shared-secret gate in front of `/ask` — that last one because its failure mode is
+silent, and the first symptom of losing it would be the provider bill.
 
 ---
 
@@ -366,6 +369,8 @@ unchanged entries — editing one brief costs one embedding call, not 52.
 | `api/tests/` | Offline test suite |
 | `data/*.json` | 52 briefs across 10 categories |
 | `app/`, `components/`, `lib/` | Next.js frontend: proxy, trace panel, evals page |
+| `render.yaml`, `api/Dockerfile` | Backend deployment |
+| [`DEPLOY.md`](DEPLOY.md) | Deployment runbook, in the order the steps have to happen |
 
 There is exactly one implementation of the pipeline. An earlier version had a second copy
 of ingest in JavaScript so the Next.js app could populate the index itself, which meant
