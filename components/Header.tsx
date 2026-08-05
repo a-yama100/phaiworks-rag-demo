@@ -13,12 +13,20 @@ export function Header() {
             RAG Demo
           </span>
         </div>
-        <a
-          href="https://www.phaiworks.com/"
-          className="text-sm text-slate-500 hover:text-slate-900 transition-colors"
-        >
-          phaiworks.com
-        </a>
+        <nav className="flex items-center gap-4 text-sm">
+          <a href="/" className="text-slate-500 hover:text-slate-900 transition-colors">
+            Demo
+          </a>
+          <a href="/evals" className="text-slate-500 hover:text-slate-900 transition-colors">
+            Evaluation
+          </a>
+          <a
+            href="https://www.phaiworks.com/"
+            className="hidden sm:inline text-slate-400 hover:text-slate-900 transition-colors"
+          >
+            phaiworks.com
+          </a>
+        </nav>
       </div>
     </header>
   );

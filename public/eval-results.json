@@ -1,0 +1,4 @@
+{
+  "status": "not_run",
+  "note": "Placeholder. Run `python eval/run_eval.py --sweep` from api/ with OPENAI_API_KEY and PINECONE_API_KEY set, against a populated index. It overwrites this file with the measured results and the /evals page renders them. Deliberately not seeded with example numbers — a published metric that nobody measured is worse than no metric."
+}

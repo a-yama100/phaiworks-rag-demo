@@ -16,17 +16,17 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://rag-demo.phaiworks.com"),
-  title: "Clinical Knowledge Base — RAG Retrieval Demo",
+  title: "Clinical Knowledge Base — RAG Demo",
   description:
-    "A live demo of a strict-schema RAG retrieval pipeline: clinically-structured biomarker briefs embedded with OpenAI and retrieved from Pinecone with hard metadata filtering.",
+    "Hybrid retrieval (Pinecone + BM25) over schema-validated biomarker briefs, wrapped in a LangGraph agent with citation-enforced generation, a visible trace, and published eval numbers.",
   robots: { index: true, follow: true },
   openGraph: {
     type: "website",
     url: "https://rag-demo.phaiworks.com/",
     siteName: "PH AI Works — RAG Demo",
-    title: "Clinical Knowledge Base — RAG Retrieval Demo",
+    title: "Clinical Knowledge Base — RAG Demo",
     description:
-      "Strict-schema RAG retrieval over biomarker briefs. Pinecone + OpenAI embeddings, with hard metadata filtering and anti-hallucination thresholds.",
+      "Hybrid retrieval, a LangGraph rewrite-and-retry agent, and answers whose citations are checked against what was retrieved. Eval numbers published.",
   },
   icons: { icon: "/favicon.svg" },
 };

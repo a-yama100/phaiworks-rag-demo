@@ -1,21 +1,15 @@
-// Pinecone integrated inference: Pinecone hosts the embedding model and embeds both
-// the ingested briefs and the user's question server-side. This app therefore needs
-// only PINECONE_API_KEY at runtime — no OpenAI key on the public endpoint.
-export const PINECONE_EMBED_MODEL = "llama-text-embed-v2";
-export const EMBED_TEXT_FIELD = "chunk_text";
-export const PINECONE_NAMESPACE = "kb";
+// Kept deliberately thin. Retrieval configuration — thresholds, top-k, model names —
+// lives in the Python backend's app/settings.py and is fetched from /meta. Duplicating
+// MIN_SCORE here would eventually leave the page describing a threshold the pipeline no
+// longer uses, which is worse than not describing it at all.
+
+export const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:8000";
 
 export const MAX_QUESTION_LEN = 200;
-export const TOP_K = 3;
 
-// Similarity score below which we return "no approved answer" instead of guessing.
-// Tuned against the hosted model so off-topic questions fall below it.
-export const MIN_SCORE = Number(process.env.MIN_SCORE ?? 0.35);
-
-export const PINECONE_INDEX = process.env.PINECONE_INDEX || "clinical-kb";
-
-// Controlled vocabulary, mirrors the ingestion schema (schema/biomarker.py).
-export const CATEGORIES: string[] = [
+// Mirrors the schema enum in api/schema/biomarker.py. Duplicated because the select has
+// to render before any request is made; the backend validates the value again anyway.
+export const CATEGORIES = [
   "metabolic",
   "lipid",
   "thyroid",
@@ -26,4 +20,19 @@ export const CATEGORIES: string[] = [
   "vitamin_mineral",
   "hormone",
   "cardiac",
-];
+] as const;
+
+export type Category = (typeof CATEGORIES)[number];
+
+export const CATEGORY_LABELS: Record<Category, string> = {
+  metabolic: "Metabolic",
+  lipid: "Lipid",
+  thyroid: "Thyroid",
+  inflammation: "Inflammation",
+  liver: "Liver",
+  kidney: "Kidney",
+  haematology: "Haematology",
+  vitamin_mineral: "Vitamin / Mineral",
+  hormone: "Hormone",
+  cardiac: "Cardiac",
+};

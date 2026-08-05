@@ -1,31 +1,27 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getNamespace } from "@/lib/clients";
 import { rateLimit } from "@/lib/ratelimit";
-import { CATEGORIES, MAX_QUESTION_LEN, MIN_SCORE, TOP_K } from "@/lib/config";
+import { BACKEND_URL, CATEGORIES, MAX_QUESTION_LEN } from "@/lib/config";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-type Match = {
-  biomarker: string;
-  category: string;
-  source: string;
-  score: number;
-  answer: string;
-};
+// A proxy, not a pipeline. Retrieval, the agent and generation all live in the Python
+// backend, so this deployment holds no provider key and the browser never learns the
+// backend URL. What stays here is what belongs at the edge: throttling and input
+// validation, both cheaper to do before crossing the network.
+
+const TIMEOUT_MS = 30_000;
 
 export async function POST(req: NextRequest) {
-  const ip =
-    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-  const limited = rateLimit(ip);
-  if (!limited.ok) {
+  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  if (!rateLimit(ip).ok) {
     return NextResponse.json(
       { error: "Too many requests. Please slow down and try again shortly." },
       { status: 429 }
     );
   }
 
-  let body: { question?: string; category?: string };
+  let body: { question?: string; category?: string; mode?: string };
   try {
     body = await req.json();
   } catch {
@@ -33,16 +29,8 @@ export async function POST(req: NextRequest) {
   }
 
   const question = (body.question ?? "").trim();
-  const category =
-    body.category && CATEGORIES.includes(body.category)
-      ? body.category
-      : undefined;
-
   if (!question) {
-    return NextResponse.json(
-      { error: "Please enter a question." },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: "Please enter a question." }, { status: 400 });
   }
   if (question.length > MAX_QUESTION_LEN) {
     return NextResponse.json(
@@ -51,46 +39,52 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  const category =
+    body.category && (CATEGORIES as readonly string[]).includes(body.category)
+      ? body.category
+      : undefined;
+  const mode = body.mode === "dense" || body.mode === "hybrid" ? body.mode : undefined;
+
+  // Without a timeout a hung backend holds the serverless function open until the
+  // platform kills it, and the user watches a spinner for the whole duration.
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
+
   try {
-    // Hard metadata filter is applied BEFORE similarity, so unapproved, non-UK, or
-    // off-category content can never surface — the anti-hallucination guarantee.
-    const filter: Record<string, unknown> = {
-      status: { $eq: "clinically_approved" },
-      language: { $eq: "en-GB" },
-    };
-    if (category) filter.category = { $eq: category };
+    const headers: Record<string, string> = { "Content-Type": "application/json" };
+    if (process.env.BACKEND_API_KEY) headers["X-API-Key"] = process.env.BACKEND_API_KEY;
 
-    // Pinecone embeds `question` with the index's hosted model and runs the search.
-    const ns = getNamespace();
-    const res = await ns.searchRecords({
-      query: { topK: TOP_K, inputs: { text: question }, filter },
-      fields: ["biomarker_name", "category", "source_brief_id", "answer_text"],
+    const res = await fetch(`${BACKEND_URL}/ask`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({ question, category, mode }),
+      signal: controller.signal,
+      cache: "no-store",
     });
 
-    const hits = res.result?.hits ?? [];
-    const matches: Match[] = hits
-      .filter((h) => (h._score ?? 0) >= MIN_SCORE)
-      .map((h) => {
-        const f = (h.fields ?? {}) as Record<string, unknown>;
-        return {
-          biomarker: String(f.biomarker_name ?? ""),
-          category: String(f.category ?? ""),
-          source: String(f.source_brief_id ?? ""),
-          score: Number((h._score ?? 0).toFixed(3)),
-          answer: String(f.answer_text ?? ""),
-        };
-      });
+    if (!res.ok) {
+      // The backend's message can name an index or a missing key. Log it, return a
+      // generic one — a deployment detail is not something to show a visitor.
+      console.error("backend error", res.status, await res.text().catch(() => ""));
+      return NextResponse.json(
+        { error: "The retrieval service is unavailable. Please try again shortly." },
+        { status: 502 }
+      );
+    }
 
-    return NextResponse.json({
-      question,
-      category: category ?? null,
-      matches,
-    });
+    return NextResponse.json(await res.json());
   } catch (err) {
-    console.error("retrieval error", err);
+    const aborted = err instanceof Error && err.name === "AbortError";
+    console.error("proxy error", err);
     return NextResponse.json(
-      { error: "Retrieval failed. Please try again later." },
-      { status: 500 }
+      {
+        error: aborted
+          ? "The request took too long. Please try again."
+          : "Could not reach the retrieval service.",
+      },
+      { status: aborted ? 504 : 502 }
     );
+  } finally {
+    clearTimeout(timer);
   }
 }
