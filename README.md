@@ -138,6 +138,26 @@ chosen because it looked reasonable.
 
 ---
 
+## Consistency controls
+
+Consistency is enforced by the pipeline, not by hoping the people writing the content are
+careful. Each row is a way a knowledge base rots in production, and where this repository
+stops it:
+
+| Risk | Control |
+|---|---|
+| Inconsistent fields, free-text categories | One Pydantic schema with enums (`api/schema/biomarker.py`). Nothing is embedded unless it validates, and failure names the file. |
+| Duplicate or conflicting entries | Vector id is a deterministic hash of the source brief. Re-ingest upserts; it cannot duplicate. |
+| Paying to re-embed unchanged content | `content_hash` is compared against the index and unchanged entries are skipped. Editing one brief costs one embedding call, not 52. |
+| Unapproved content reaching users | Only `status=clinically_approved` is retrievable. Drafts and deprecated entries are excluded by the filter, on both the vector and keyword sides. |
+| Wrong-context retrieval | Hard metadata filter on status, language and optional category runs *before* similarity, so off-category briefs are never candidates. |
+| Similarity polluted by metadata | `embedding_text()` vectorises semantic content only; governance fields stay out of the vector. A test asserts they are absent. |
+| Hallucinated sources | Cited `source_brief_id`s are checked for membership in the retrieval result. A cited id that was not retrieved discards the answer. |
+| Confident answers to uncovered questions | A calibrated score threshold plus an explicit decline path, both scored separately in the eval. |
+| Audit and GDPR traceability | Every entry carries `source_brief_id`, `approved_by`, `approval_date` and `schema_version`. An approved entry without a named approver fails validation. |
+
+---
+
 ## Evaluation
 
 The gold set is 60 cases in [`api/eval/gold.yaml`](api/eval/gold.yaml), each tagged by the
