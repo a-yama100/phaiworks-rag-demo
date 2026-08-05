@@ -12,22 +12,22 @@ const EXAMPLES: { label: string; question: string; note: string }[] = [
   {
     label: "lay wording",
     question: "I'm always tired and think my iron is low",
-    note: "no marker named — the dense retriever earns its place here",
+    note: "no marker named, and Ferritin still comes first",
   },
   {
     label: "exact name",
     question: "GGT",
-    note: "three liver enzymes are semantically adjacent; BM25 breaks the tie",
+    note: "12/12 on exact names without any keyword search",
   },
   {
     label: "confusable",
-    question: "which liver enzyme tells me whether a high ALP is bone or liver",
-    note: "four plausible briefs, one right answer",
+    question: "the iron test that is not thrown off by inflammation",
+    note: "four iron briefs are plausible; only one is right",
   },
   {
     label: "out of scope",
     question: "what dose of levothyroxine should I take",
-    note: "on-topic vocabulary, uncovered by the briefs — it should decline",
+    note: "on topic enough to retrieve TSH, uncovered by it — declined at generation",
   },
   {
     label: "off topic",
@@ -57,7 +57,7 @@ function refusalCopy(reason: string): string {
 export default function Home() {
   const [question, setQuestion] = useState("");
   const [category, setCategory] = useState("");
-  const [mode, setMode] = useState<"hybrid" | "dense">("hybrid");
+  const [mode, setMode] = useState<"hybrid" | "dense">("dense");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [result, setResult] = useState<AskResponse | null>(null);
@@ -99,14 +99,18 @@ export default function Home() {
           Clinical Knowledge Base — RAG Demo
         </h1>
         <p className="mx-auto mt-3 max-w-2xl text-slate-600">
-          Hybrid retrieval over 52 schema-validated biomarker briefs, wrapped in a
-          LangGraph agent that rewrites and retries before it gives up. Every answer
-          cites the briefs it used, and citations are checked against what was actually
+          Retrieval over 52 schema-validated biomarker briefs, wrapped in a LangGraph
+          agent that rewrites and retries before it gives up. Every answer cites the
+          briefs it used, and those citations are checked against what was actually
           retrieved — so the system can decline, and you can see why.
+        </p>
+        <p className="mx-auto mt-3 max-w-2xl text-sm text-slate-500">
+          Measured on a 60-case gold set: <strong>96%</strong> top-1 retrieval and{" "}
+          <strong>100%</strong> of out-of-scope questions refused, end to end.
         </p>
         <p className="mt-3 text-sm">
           <Link href="/evals" className="text-teal-700 underline hover:text-teal-900">
-            See the evaluation numbers →
+            See the evaluation, including what still fails →
           </Link>
         </p>
       </section>
@@ -151,7 +155,7 @@ export default function Home() {
 
         <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-slate-100 pt-4">
           <span className="text-xs text-slate-400">retrieval</span>
-          {(["hybrid", "dense"] as const).map((m) => (
+          {(["dense", "hybrid"] as const).map((m) => (
             <button
               key={m}
               onClick={() => setMode(m)}
@@ -162,11 +166,11 @@ export default function Home() {
                   : "border border-slate-200 bg-slate-50 text-slate-500 hover:bg-slate-100")
               }
             >
-              {m === "hybrid" ? "hybrid (dense + BM25)" : "dense only"}
+              {m === "dense" ? "dense (default)" : "hybrid (dense + BM25)"}
             </button>
           ))}
           <span className="text-xs text-slate-400">
-            — switch and re-ask to see the difference on the same question
+            — hybrid scored worse here (90% vs 96%); switch and re-ask to see it happen
           </span>
         </div>
 
@@ -276,8 +280,9 @@ export default function Home() {
         </ul>
         <p className="mt-6 text-sm text-slate-500">
           Stack: Next.js proxy (no provider keys) · FastAPI · LangChain retrieval ·
-          LangGraph agent · Pinecone serverless · OpenAI embeddings. Source and the full
-          write-up are in the repository.
+          LangGraph agent · Pinecone serverless · Gemini embeddings and generation,
+          swappable for OpenAI or Anthropic by config. Source and the full write-up are
+          in the repository.
         </p>
       </section>
     </div>

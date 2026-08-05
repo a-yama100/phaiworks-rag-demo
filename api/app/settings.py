@@ -77,13 +77,31 @@ CANDIDATE_K = int(os.getenv("CANDIDATE_K", "12"))
 # the default rather than tuned — on a corpus this size, tuning it against a 60-case gold
 # set would mostly be fitting the gold set.
 RRF_K = int(os.getenv("RRF_K", "60"))
-# Cosine score below which a dense hit is treated as "no real evidence". This is the
-# single most consequential number here — it decides refusals. Set it from the sweep
-# (`run_eval.py --sweep`) against a live index, not by intuition.
-MIN_SCORE = float(os.getenv("MIN_SCORE", "0.35"))
-# Retrieval mode: "hybrid" (dense + BM25 via RRF) or "dense" (dense only).
-# The eval harness runs both to produce the before/after comparison.
-RETRIEVAL_MODE = os.getenv("RETRIEVAL_MODE", "hybrid")
+# How much the BM25 run counts for, relative to the dense run, inside the fusion.
+# Set from `run_eval.py --sweep-weights`, not from taste. Equally-weighted fusion is the
+# usual default and it made retrieval measurably worse on this corpus: BM25 latches onto
+# a domain word that many briefs share ("cholesterol") and floats them all above the one
+# brief that actually answers the question.
+BM25_WEIGHT = float(os.getenv("BM25_WEIGHT", "1.0"))
+# Cosine score below which a dense hit is treated as "no real evidence" — the number
+# that decides refusals, and the most consequential one in this file.
+#
+# 0.655 comes off the sweep, not from taste: combined accuracy peaks on a plateau from
+# 0.648 to 0.663 and this sits in the middle of it rather than on an edge. It was 0.35
+# until the sweep ran, inherited from a different embedding model — gemini-embedding-001
+# scores an unrelated question ("what is the capital of Australia") at 0.51, so a 0.35
+# threshold refused precisely nothing and the refusal rate measured 0%.
+MIN_SCORE = float(os.getenv("MIN_SCORE", "0.655"))
+# Retrieval mode: "dense" or "hybrid" (dense + BM25 via RRF).
+#
+# Dense, because that is what the eval says. Hybrid retrieval is the standard advice and
+# it was the original design here, but on this corpus BM25 only ever cost accuracy: top-1
+# falls from 96% to 90% at equal weighting and degrades monotonically with the BM25
+# weight. Exact-name queries — the case BM25 is supposed to rescue — already score 12/12
+# on dense alone, because a 3072-dimension embedding has no trouble with "GGT".
+# The hybrid path is kept, and the eval keeps measuring it, so this stays a measurement
+# rather than a belief.
+RETRIEVAL_MODE = os.getenv("RETRIEVAL_MODE", "dense")
 
 # --- graph -------------------------------------------------------------------
 # How many times the agent may rewrite the question and retrieve again before giving up.

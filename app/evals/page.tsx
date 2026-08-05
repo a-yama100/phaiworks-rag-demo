@@ -43,32 +43,20 @@ function NotRun({ note }: { note: string }) {
 
 function MetricCard({
   label,
-  hybrid,
-  dense,
-  delta,
+  primary,
+  comparison,
 }: {
   label: string;
-  hybrid: string;
-  dense: string;
-  delta?: number;
+  primary: string;
+  comparison?: string;
 }) {
   return (
     <div className="rounded-lg border border-slate-200 bg-white p-4">
       <div className="text-[11px] uppercase tracking-wide text-slate-400">{label}</div>
-      <div className="mt-1 flex items-baseline gap-2">
-        <span className="font-mono text-2xl text-slate-900">{hybrid}</span>
-        {delta !== undefined && delta !== 0 && (
-          <span
-            className={
-              "font-mono text-xs " + (delta > 0 ? "text-teal-600" : "text-rose-600")
-            }
-          >
-            {delta > 0 ? "+" : ""}
-            {(delta * 100).toFixed(0)}pt
-          </span>
-        )}
+      <div className="mt-1 font-mono text-2xl text-slate-900">{primary}</div>
+      <div className="mt-1 font-mono text-xs text-slate-400">
+        {comparison ? `hybrid: ${comparison}` : " "}
       </div>
-      <div className="mt-1 font-mono text-xs text-slate-400">dense only: {dense}</div>
     </div>
   );
 }
@@ -87,10 +75,11 @@ export default function EvalsPage() {
     <div className="mx-auto max-w-4xl px-4 py-10">
       <h1 className="text-3xl font-bold text-slate-900">Evaluation</h1>
       <p className="mt-3 max-w-2xl text-slate-600">
-        Measured on a {r.gold_set_size}-case gold set, comparing dense-only retrieval
-        against dense + BM25 fused with reciprocal rank fusion. Out-of-scope cases are
-        scored separately on refusal: a pipeline tuned only for recall answers every
-        question, including the ones it should decline.
+        Measured on a {r.gold_set_size}-case gold set. The headline figures are the
+        shipped configuration — dense retrieval — with hybrid shown alongside as the
+        comparison it lost. Out-of-scope cases are scored separately on refusal: a
+        pipeline tuned only for recall answers every question, including the ones it
+        should decline.
       </p>
       <p className="mt-2 font-mono text-xs text-slate-400">
         {r.config.embed_model} · top_k={k} · min_score={r.config.min_score} · run{" "}
@@ -100,34 +89,127 @@ export default function EvalsPage() {
       <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <MetricCard
           label="top-1 accuracy"
-          hybrid={pct(hybrid.top1)}
-          dense={pct(dense.top1)}
-          delta={r.delta.top1}
+          primary={pct(dense.top1)}
+          comparison={pct(hybrid.top1)}
         />
         <MetricCard
           label={`recall@${k}`}
-          hybrid={pct(hybrid[recallKey] as number)}
-          dense={pct(dense[recallKey] as number)}
-          delta={r.delta[recallKey]}
+          primary={pct(dense[recallKey] as number)}
+          comparison={pct(hybrid[recallKey] as number)}
         />
         <MetricCard
           label="MRR"
-          hybrid={hybrid.mrr.toFixed(3)}
-          dense={dense.mrr.toFixed(3)}
-          delta={r.delta.mrr}
+          primary={dense.mrr.toFixed(3)}
+          comparison={hybrid.mrr.toFixed(3)}
         />
         <MetricCard
-          label="refusal accuracy"
-          hybrid={pct(hybrid.refusal_accuracy)}
-          dense={pct(dense.refusal_accuracy)}
+          label="refusal, retrieval only"
+          primary={pct(dense.refusal_accuracy)}
         />
       </div>
+
+      {r.generation && (
+        <section className="mt-10 rounded-xl border border-teal-200 bg-teal-50/50 p-5">
+          <h2 className="text-lg font-semibold text-slate-900">End to end, through the agent</h2>
+          <p className="mt-1 max-w-3xl text-sm text-slate-600">
+            The retrieval threshold above refuses{" "}
+            {pct(dense.refusal_accuracy)} of out-of-scope questions. It cannot do better,
+            because the ones it lets through are squarely on topic — asking for a
+            diagnosis, a drug dose, a product recommendation. A cosine score has no way to
+            tell those apart from a legitimate question about the same biomarker. The
+            generation stage does, and catches all of them.
+          </p>
+          <div className="mt-4 grid gap-3 sm:grid-cols-3">
+            {[
+              ["out-of-scope refused", pct(r.generation.out_of_scope_refused)],
+              ["in-scope answered", pct(r.generation.in_scope_answered)],
+              ["cited the right brief", pct(r.generation.cited_the_expected_brief)],
+            ].map(([label, value]) => (
+              <div key={label} className="rounded-lg border border-slate-200 bg-white p-4">
+                <div className="text-[11px] uppercase tracking-wide text-slate-400">
+                  {label}
+                </div>
+                <div className="mt-1 font-mono text-2xl text-slate-900">{value}</div>
+              </div>
+            ))}
+          </div>
+          <p className="mt-3 font-mono text-xs text-slate-400">
+            {r.generation.chat_model} · zero hallucinated citations: the harness asserts
+            every cited id was in the retrieval result
+          </p>
+          {r.generation.notable && r.generation.notable.length > 0 && (
+            <div className="mt-4">
+              <p className="text-sm text-slate-600">
+                The in-scope cases it declined are all requests for a personal diagnosis.
+                The retrieval label is right — HbA1c <em>is</em> the brief for &ldquo;am I
+                prediabetic&rdquo; — but declining to diagnose is also right, so these are
+                counted as misses by a gold set that only labels retrieval:
+              </p>
+              <ul className="mt-2 space-y-1">
+                {r.generation.notable.map((n) => (
+                  <li key={n.id} className="text-sm text-slate-500">
+                    <span className="font-mono text-[11px] text-slate-400">{n.id}</span>{" "}
+                    {n.question} —{" "}
+                    <span className="font-mono text-[11px]">{n.reason}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </section>
+      )}
+
+      {r.weight_sweep && (
+        <section className="mt-10">
+          <h2 className="text-lg font-semibold text-slate-900">
+            Why hybrid retrieval was dropped
+          </h2>
+          <p className="mt-1 max-w-3xl text-sm text-slate-500">
+            Hybrid search is the standard recommendation and was the original design here.
+            Sweeping the weight BM25 carries in the fusion shows it never helps on this
+            corpus and degrades monotonically: BM25 latches onto a domain word many briefs
+            share — &ldquo;cholesterol&rdquo; — and floats all of them above the one that
+            answers the question. Kept in the code, off by default.
+          </p>
+          <div className="mt-4 overflow-x-auto">
+            <table className="w-full min-w-[28rem] text-sm">
+              <thead>
+                <tr className="border-b border-slate-200 text-left text-xs uppercase tracking-wide text-slate-400">
+                  <th className="py-2 pr-4 font-medium">BM25 weight</th>
+                  <th className="py-2 pr-4 font-medium">top-1</th>
+                  <th className="py-2 pr-4 font-medium">MRR</th>
+                </tr>
+              </thead>
+              <tbody>
+                {r.weight_sweep.map((row) => (
+                  <tr
+                    key={String(row.bm25_weight)}
+                    className={
+                      "border-b border-slate-100 " +
+                      (row.bm25_weight === "dense-only" ? "bg-teal-50" : "")
+                    }
+                  >
+                    <td className="py-2 pr-4 font-mono text-slate-700">
+                      {String(row.bm25_weight)}
+                    </td>
+                    <td className="py-2 pr-4 font-mono text-slate-900">{pct(row.top1)}</td>
+                    <td className="py-2 pr-4 font-mono text-slate-500">
+                      {row.mrr.toFixed(3)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
 
       <section className="mt-10">
         <h2 className="text-lg font-semibold text-slate-900">By case type</h2>
         <p className="mt-1 text-sm text-slate-500">
-          Where fusion actually helps. Dense retrieval handles lay wording well on its
-          own; exact names and confusable clusters are what it gets wrong.
+          Broken down by the failure each case type is designed to catch. The `exact`
+          row is the one that settled the hybrid question: keyword search exists to rescue
+          verbatim names, and dense retrieval already gets every one of them.
         </p>
         <div className="mt-4 overflow-x-auto">
           <table className="w-full min-w-[32rem] text-sm">
@@ -135,7 +217,7 @@ export default function EvalsPage() {
               <tr className="border-b border-slate-200 text-left text-xs uppercase tracking-wide text-slate-400">
                 <th className="py-2 pr-4 font-medium">case type</th>
                 <th className="py-2 pr-4 font-medium">n</th>
-                <th className="py-2 pr-4 font-medium">dense</th>
+                <th className="py-2 pr-4 font-medium">dense (shipped)</th>
                 <th className="py-2 pr-4 font-medium">hybrid</th>
               </tr>
             </thead>
@@ -144,10 +226,10 @@ export default function EvalsPage() {
                 <tr key={tag} className="border-b border-slate-100">
                   <td className="py-2 pr-4 font-mono text-xs text-slate-700">{tag}</td>
                   <td className="py-2 pr-4 text-slate-500">{hybrid.by_tag[tag].n}</td>
-                  <td className="py-2 pr-4 font-mono text-slate-500">
+                  <td className="py-2 pr-4 font-mono text-slate-900">
                     {pct(dense.by_tag[tag]?.accuracy ?? 0)}
                   </td>
-                  <td className="py-2 pr-4 font-mono text-slate-900">
+                  <td className="py-2 pr-4 font-mono text-slate-500">
                     {pct(hybrid.by_tag[tag].accuracy)}
                   </td>
                 </tr>
@@ -204,18 +286,18 @@ export default function EvalsPage() {
         </section>
       )}
 
-      {hybrid.failures.length > 0 && (
+      {dense.failures.length > 0 && (
         <section className="mt-10">
           <h2 className="text-lg font-semibold text-slate-900">
             Remaining failures{" "}
-            <span className="font-normal text-slate-400">({hybrid.failures.length})</span>
+            <span className="font-normal text-slate-400">({dense.failures.length})</span>
           </h2>
           <p className="mt-1 text-sm text-slate-500">
             Published rather than trimmed. A gold set with no failures left has usually
             been edited to match the system rather than the other way round.
           </p>
           <ul className="mt-4 space-y-2">
-            {hybrid.failures.map((f) => (
+            {dense.failures.map((f) => (
               <li key={f.id} className="rounded-lg border border-slate-200 bg-white p-3">
                 <div className="flex flex-wrap items-baseline gap-2">
                   <span className="font-mono text-[11px] text-slate-400">{f.id}</span>

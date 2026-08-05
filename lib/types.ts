@@ -68,7 +68,13 @@ export type EvalMode = {
 
 export type EvalResults = {
   generated_at: string;
-  config: { embed_model: string; index: string; top_k: number; min_score: number };
+  config: {
+    embed_model: string;
+    index: string;
+    top_k: number;
+    min_score: number;
+    bm25_weight: number;
+  };
   gold_set_size: number;
   modes: { dense: EvalMode; hybrid: EvalMode };
   delta: Record<string, number>;
@@ -78,5 +84,15 @@ export type EvalResults = {
     correctly_refused: number;
     combined: number;
   }[];
-  generation?: Record<string, number | string>;
+  weight_sweep?: ({ bm25_weight: number | string; top1: number; mrr: number } & Record<
+    string,
+    number | string
+  >)[];
+  generation?: {
+    in_scope_answered: number;
+    cited_the_expected_brief: number;
+    out_of_scope_refused: number;
+    chat_model: string;
+    notable?: { id: string; question: string; reason: string }[];
+  };
 };

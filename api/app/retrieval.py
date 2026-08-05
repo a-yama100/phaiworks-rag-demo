@@ -23,6 +23,7 @@ from app.bm25 import FilteredBM25Retriever
 from app.corpus import matches_filter, retrievable_documents
 from app.settings import (
     ALLOWED_LANGUAGE,
+    BM25_WEIGHT,
     CANDIDATE_K,
     EMBED_MODEL,
     EMBED_PROVIDER,
@@ -157,18 +158,28 @@ def _doc_key(hit: Hit) -> str:
     return hit.doc.id or hit.brief_id
 
 
-def reciprocal_rank_fusion(runs: list[list[Hit]], k: int = RRF_K) -> list[Hit]:
+def reciprocal_rank_fusion(
+    runs: list[list[Hit]],
+    k: int = RRF_K,
+    weights: list[float] | None = None,
+) -> list[Hit]:
     """
-    RRF: score = sum over retrievers of 1 / (k + rank).
+    RRF: score = sum over retrievers of weight / (k + rank).
 
     Rank-based, so it needs no score normalisation between a cosine similarity and a
-    BM25 score — which is the whole reason to prefer it here. Those two numbers are not
-    on comparable scales and any attempt to blend them directly needs a magic weight
-    that has to be re-tuned every time the corpus changes.
+    BM25 score. Those two numbers are not on comparable scales, and blending them
+    directly needs a magic constant that has to be re-tuned whenever the corpus changes.
+
+    `weights` exists because equal weighting turned out to be the wrong default here —
+    see BM25_WEIGHT in settings and the weight sweep in the eval harness. A weight of 0
+    reduces this to dense-only.
     """
+    if weights is None:
+        weights = [1.0] * len(runs)
+
     merged: dict[str, Hit] = {}
 
-    for run in runs:
+    for run, weight in zip(runs, weights):
         for hit in run:
             key = _doc_key(hit)
             existing = merged.get(key)
@@ -179,7 +190,7 @@ def reciprocal_rank_fusion(runs: list[list[Hit]], k: int = RRF_K) -> list[Hit]:
             rank = hit.dense_rank if hit.dense_rank is not None else hit.sparse_rank
             if rank is None:
                 continue
-            existing.fused_score += 1.0 / (k + rank)
+            existing.fused_score += weight / (k + rank)
 
             if hit.dense_rank is not None:
                 existing.dense_rank = hit.dense_rank
@@ -211,7 +222,7 @@ def retrieve(
 
     dense = dense_search(question, category)
     sparse = sparse_search(question, category)
-    return reciprocal_rank_fusion([dense, sparse])[:top_k]
+    return reciprocal_rank_fusion([dense, sparse], weights=[1.0, BM25_WEIGHT])[:top_k]
 
 
 def best_dense_score(hits: list[Hit]) -> float:
