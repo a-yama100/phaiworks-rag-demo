@@ -7,8 +7,11 @@ export function StatsBar({ result }: { result: AskResponse }) {
   const cells: [string, string][] = [
     ["latency", `${timing.total_ms} ms`],
     ["tokens", `${cost.input_tokens} in / ${cost.output_tokens} out`],
-    ["this query", `$${cost.usd_total.toFixed(6)}`],
-    ["per 1k queries", `$${cost.usd_per_1k_queries.toFixed(2)}`],
+    ["this query", cost.usd_total === null ? "—" : `$${cost.usd_total.toFixed(6)}`],
+    [
+      "per 1k queries",
+      cost.usd_per_1k_queries === null ? "—" : `$${cost.usd_per_1k_queries.toFixed(2)}`,
+    ],
     ["retrieval passes", String(result.queries.length)],
   ];
 

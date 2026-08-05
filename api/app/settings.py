@@ -22,19 +22,45 @@ EVAL_DIR = REPO_ROOT / "api" / "eval"
 EVAL_RESULTS_PATH = REPO_ROOT / "public" / "eval-results.json"
 
 # --- models ------------------------------------------------------------------
-EMBED_MODEL = os.getenv("EMBED_MODEL", "text-embedding-3-small")
-EMBED_DIM = int(os.getenv("EMBED_DIM", "1536"))  # text-embedding-3-small
-CHAT_MODEL = os.getenv("CHAT_MODEL", "gpt-4o-mini")
+# Provider is a config value, not a hardcoded import. LangChain's abstraction is worth
+# very little if the pipeline still has one provider welded into it — and being able to
+# move both halves independently is what lets embeddings and generation come from
+# different vendors when one of them has better pricing or a better model for the job.
+EMBED_PROVIDER = os.getenv("EMBED_PROVIDER", "google")  # google | openai
+CHAT_PROVIDER = os.getenv("CHAT_PROVIDER", "google")  # google | openai | anthropic
 
-# Published so the UI can show cost per query instead of hand-waving about it.
-# USD per 1M tokens. Update when provider pricing changes.
+_EMBED_DEFAULTS = {
+    "google": ("gemini-embedding-001", 3072),
+    "openai": ("text-embedding-3-small", 1536),
+}
+_CHAT_DEFAULTS = {
+    "google": "gemini-2.5-flash",
+    "openai": "gpt-4o-mini",
+    "anthropic": "claude-haiku-4-5-20251001",
+}
+
+_default_embed_model, _default_embed_dim = _EMBED_DEFAULTS.get(
+    EMBED_PROVIDER, _EMBED_DEFAULTS["google"]
+)
+EMBED_MODEL = os.getenv("EMBED_MODEL", _default_embed_model)
+# Must match the Pinecone index. Changing the embedding model means a new index, not a
+# re-ingest into the old one — the dimensions will not line up.
+EMBED_DIM = int(os.getenv("EMBED_DIM", str(_default_embed_dim)))
+CHAT_MODEL = os.getenv("CHAT_MODEL", _CHAT_DEFAULTS.get(CHAT_PROVIDER, "gemini-2.5-flash"))
+
+# USD per 1M tokens, so the UI can show a measured cost rather than calling it cheap.
+# These are configured list prices, not something the code discovers: they must be
+# updated when a provider changes pricing. A model missing from this table reports no
+# cost rather than a made-up one — see app/cost.py.
 PRICE_PER_MTOK = {
     "gpt-4o-mini": {"in": 0.15, "out": 0.60},
     "text-embedding-3-small": {"in": 0.02, "out": 0.0},
+    "gemini-2.5-flash": {"in": 0.30, "out": 2.50},
+    "gemini-embedding-001": {"in": 0.15, "out": 0.0},
 }
 
 # --- vector store ------------------------------------------------------------
-INDEX_NAME = os.getenv("PINECONE_INDEX", "clinical-kb-v2")
+INDEX_NAME = os.getenv("PINECONE_INDEX", "clinical-kb-gemini")
 PINECONE_CLOUD = os.getenv("PINECONE_CLOUD", "aws")
 PINECONE_REGION = os.getenv("PINECONE_REGION", "us-east-1")
 NAMESPACE = os.getenv("PINECONE_NAMESPACE", "kb")
@@ -47,19 +73,22 @@ TOP_K = int(os.getenv("TOP_K", "5"))
 # Candidates pulled from each retriever before fusion. Wider than TOP_K so the
 # fusion has something to actually reorder.
 CANDIDATE_K = int(os.getenv("CANDIDATE_K", "12"))
-# Reciprocal-rank-fusion damping. 60 is the value from the original RRF paper and
-# the eval showed no benefit from tuning it on a corpus this size.
+# Reciprocal-rank-fusion damping. 60 is the value from the original RRF paper, kept as
+# the default rather than tuned — on a corpus this size, tuning it against a 60-case gold
+# set would mostly be fitting the gold set.
 RRF_K = int(os.getenv("RRF_K", "60"))
-# Cosine score below which a dense hit is treated as "no real evidence".
-# Tuned on the gold set: see api/eval/README section in the top-level README.
+# Cosine score below which a dense hit is treated as "no real evidence". This is the
+# single most consequential number here — it decides refusals. Set it from the sweep
+# (`run_eval.py --sweep`) against a live index, not by intuition.
 MIN_SCORE = float(os.getenv("MIN_SCORE", "0.35"))
 # Retrieval mode: "hybrid" (dense + BM25 via RRF) or "dense" (dense only).
 # The eval harness runs both to produce the before/after comparison.
 RETRIEVAL_MODE = os.getenv("RETRIEVAL_MODE", "hybrid")
 
 # --- graph -------------------------------------------------------------------
-# How many times the agent may rewrite the question and retrieve again before
-# giving up and refusing. 1 is enough on this corpus; 2+ only added latency.
+# How many times the agent may rewrite the question and retrieve again before giving up.
+# 1 by default: each retry costs a model call plus an embedding, and a question that two
+# phrasings cannot reach is usually not in the corpus at all.
 MAX_REWRITES = int(os.getenv("MAX_REWRITES", "1"))
 
 # --- guardrails --------------------------------------------------------------

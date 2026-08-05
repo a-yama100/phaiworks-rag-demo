@@ -25,8 +25,10 @@ export type Cost = {
   embedding_tokens_approx: number;
   chat_model: string;
   embed_model: string;
-  usd_total: number;
-  usd_per_1k_queries: number;
+  // null when a configured model has no price entry. Reporting nothing beats reporting
+  // a total that quietly treats an unpriced leg as free.
+  usd_total: number | null;
+  usd_per_1k_queries: number | null;
 };
 
 export type AskResponse = {

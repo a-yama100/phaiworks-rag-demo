@@ -5,7 +5,8 @@ Why hybrid. Dense embeddings handle "I'm always tired, which iron test matters?"
 no lexical overlap with "Ferritin", but semantically close. BM25 handles the opposite
 failure: a user types "GGT" or "HbA1c" verbatim and cosine similarity buries it under
 five neighbouring biomarkers that are all *about* the same organ. Each retriever covers
-the other's blind spot, which is why the eval numbers move when you turn fusion on.
+the other's blind spot. Whether that shows up as a real gain is what the eval measures;
+`RETRIEVAL_MODE=dense` runs the same pipeline without fusion so the two are comparable.
 """
 
 from __future__ import annotations
@@ -14,7 +15,7 @@ import functools
 from dataclasses import dataclass, field
 
 from langchain_core.documents import Document
-from langchain_openai import OpenAIEmbeddings
+from langchain_core.embeddings import Embeddings
 from langchain_pinecone import PineconeVectorStore
 from pinecone import Pinecone
 
@@ -24,6 +25,7 @@ from app.settings import (
     ALLOWED_LANGUAGE,
     CANDIDATE_K,
     EMBED_MODEL,
+    EMBED_PROVIDER,
     INDEX_NAME,
     NAMESPACE,
     REQUIRED_STATUS,
@@ -72,8 +74,23 @@ class Hit:
 
 
 @functools.lru_cache(maxsize=1)
-def get_embeddings() -> OpenAIEmbeddings:
-    return OpenAIEmbeddings(model=EMBED_MODEL, api_key=require("OPENAI_API_KEY"))
+def get_embeddings() -> Embeddings:
+    """
+    Both sides return a LangChain Embeddings, so nothing downstream knows or cares which
+    provider produced the vectors. Switching is one environment variable plus a new
+    index, because the dimensions differ.
+    """
+    if EMBED_PROVIDER == "openai":
+        from langchain_openai import OpenAIEmbeddings
+
+        return OpenAIEmbeddings(model=EMBED_MODEL, api_key=require("OPENAI_API_KEY"))
+    if EMBED_PROVIDER == "google":
+        from langchain_google_genai import GoogleGenerativeAIEmbeddings
+
+        return GoogleGenerativeAIEmbeddings(
+            model=f"models/{EMBED_MODEL}", google_api_key=require("GOOGLE_API_KEY")
+        )
+    raise RuntimeError(f"Unknown EMBED_PROVIDER {EMBED_PROVIDER!r}. Use 'google' or 'openai'.")
 
 
 @functools.lru_cache(maxsize=1)

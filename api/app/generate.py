@@ -21,12 +21,12 @@ from __future__ import annotations
 
 import functools
 
+from langchain_core.language_models import BaseChatModel
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_openai import ChatOpenAI
 from pydantic import BaseModel, Field
 
 from app.retrieval import Hit
-from app.settings import CHAT_MODEL, require
+from app.settings import CHAT_MODEL, CHAT_PROVIDER, require
 
 SYSTEM_PROMPT = """You answer questions about blood tests using ONLY the approved briefs supplied below.
 
@@ -75,11 +75,35 @@ class GenerationResult(BaseModel):
 
 
 @functools.lru_cache(maxsize=1)
-def get_chat_model() -> ChatOpenAI:
-    # temperature=0: this is an extraction-shaped task, not a creative one. Sampling
-    # variance here shows up as citations that change between identical questions,
-    # which makes the eval numbers noisy for no benefit.
-    return ChatOpenAI(model=CHAT_MODEL, temperature=0, api_key=require("OPENAI_API_KEY"))
+def get_chat_model() -> BaseChatModel:
+    """
+    temperature=0 throughout: this is an extraction-shaped task, not a creative one.
+    Sampling variance shows up as citations that change between identical questions,
+    which makes the eval noisy for no benefit.
+
+    All three providers support with_structured_output, so the citation contract holds
+    whichever one is configured — that is the property being relied on here, not the
+    provider.
+    """
+    if CHAT_PROVIDER == "openai":
+        from langchain_openai import ChatOpenAI
+
+        return ChatOpenAI(model=CHAT_MODEL, temperature=0, api_key=require("OPENAI_API_KEY"))
+    if CHAT_PROVIDER == "google":
+        from langchain_google_genai import ChatGoogleGenerativeAI
+
+        return ChatGoogleGenerativeAI(
+            model=CHAT_MODEL, temperature=0, google_api_key=require("GOOGLE_API_KEY")
+        )
+    if CHAT_PROVIDER == "anthropic":
+        from langchain_anthropic import ChatAnthropic
+
+        return ChatAnthropic(
+            model=CHAT_MODEL, temperature=0, api_key=require("ANTHROPIC_API_KEY")
+        )
+    raise RuntimeError(
+        f"Unknown CHAT_PROVIDER {CHAT_PROVIDER!r}. Use 'google', 'openai' or 'anthropic'."
+    )
 
 
 def format_context(hits: list[Hit]) -> str:

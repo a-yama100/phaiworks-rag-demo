@@ -42,7 +42,7 @@ Next.js on Vercel ──────── holds NO provider keys
    │
    │ HTTP
    ▼
-FastAPI (api/) ─────────── holds OPENAI_API_KEY, PINECONE_API_KEY
+FastAPI (api/) ─────────── holds PINECONE_API_KEY + the provider key
    │
    └── LangGraph agent
          │
@@ -128,13 +128,36 @@ The rewrite prompt has one guard worth noting: if the question is not about bloo
 at all, it returns it unchanged. Rewriting an off-topic question into on-topic vocabulary
 would manufacture a false match — the retry would defeat the refusal it exists to avoid.
 
+### Providers are configuration, not imports
+
+Embeddings and generation are each chosen by an environment variable —
+`EMBED_PROVIDER` (google, openai) and `CHAT_PROVIDER` (google, openai, anthropic) — and
+the provider package is imported inside the branch that uses it, so the unused ones are
+never loaded. Both halves move independently, which is what lets embeddings come from one
+vendor and generation from another when the pricing or the model quality warrants it.
+
+This is the claim LangChain is usually bought for and rarely tested against. It is tested
+here: the pipeline was built on OpenAI and moved to Gemini, and the change was two
+functions plus a new index. The citation contract survived the move intact, because
+`with_structured_output` is supported by all three.
+
+**The cost:** the embedding dimension is part of the choice — `gemini-embedding-001`
+returns 3072 dimensions and `text-embedding-3-small` returns 1536 — so switching
+embedding providers means building a **new** Pinecone index, not re-ingesting into the
+existing one. The index name encodes the model for that reason.
+
 ### Grading with a threshold, not an LLM judge
 
-An LLM relevance grader was tried and removed. It cost a round trip, added run-to-run
-variance, and scored worse on the gold set: asked whether a loosely-related brief was
-relevant, the model talked itself into yes. The cosine score is already a calibrated
-number, and the threshold that uses it is justified by a published sweep rather than
-chosen because it looked reasonable.
+Relevance is decided by a score threshold rather than by asking a model whether the
+retrieved briefs are relevant. An LLM judge costs an extra round trip on every query and
+introduces run-to-run variance into the one decision that most needs to be stable, and
+the cosine score it would be second-guessing is already a calibrated number.
+
+The threshold itself is not a guess: `run_eval.py --sweep` replays the recorded scores at
+a range of values and reports what each one costs in answers refused and out-of-scope
+questions let through, so the chosen value comes off that curve. Swapping in an LLM judge
+and measuring it against the same gold set would be the honest way to overturn this
+decision — the harness is there for it.
 
 ---
 
@@ -191,9 +214,9 @@ no failures left has usually been edited to match the system rather than the oth
 round.
 
 > **Status:** the harness, the gold set and the page are complete; the numbers have not
-> been measured yet, because that requires an OpenAI key and a populated Pinecone index.
-> The page shows an explicit "not run" state rather than seeded example numbers. A
-> published metric that nobody measured is worse than no metric.
+> been measured yet, because that requires a populated Pinecone index. The page shows an
+> explicit "not run" state rather than seeded example numbers. A published metric that
+> nobody measured is worse than no metric.
 
 ### Tests that need no keys
 
@@ -218,7 +241,7 @@ arithmetic, citation rejection and acceptance, and every branch of the graph's r
 cd api
 python -m venv .venv && .venv/Scripts/activate
 pip install -r requirements.txt
-cp .env.example .env                  # OPENAI_API_KEY + PINECONE_API_KEY
+cp .env.example .env                  # PINECONE_API_KEY + one provider key
 python ingest.py --dry-run            # validate the corpus, no keys or network needed
 python ingest.py                      # create the index, embed, upsert
 uvicorn app.main:app --port 8000
@@ -263,7 +286,10 @@ else calls it.
 
 ## Stack
 
-Next.js 16 · FastAPI · LangChain · LangGraph · Pinecone serverless · OpenAI
-`text-embedding-3-small` + `gpt-4o-mini` · Pydantic · pytest
+Next.js 16 · FastAPI · LangChain · LangGraph · Pinecone serverless · Pydantic · pytest
+
+Providers are swappable. The deployed configuration is Gemini
+(`gemini-embedding-001` + `gemini-2.5-flash`); OpenAI (`text-embedding-3-small` +
+`gpt-4o-mini`) and Anthropic for generation are supported by the same code paths.
 
 Built by [PH AI Works](https://www.phaiworks.com/).
