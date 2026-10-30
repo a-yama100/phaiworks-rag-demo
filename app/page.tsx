@@ -123,7 +123,7 @@ export default function Home() {
 
       <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
         <div className="flex flex-col gap-3 sm:flex-row">
-          <input
+          <input aria-label="Question about a blood test or biomarker" name="question" autoComplete="off"
             type="text"
             value={question}
             maxLength={MAX_QUESTION_LEN}
@@ -132,7 +132,7 @@ export default function Home() {
             onKeyDown={(e) => e.key === "Enter" && ask(question)}
             className="flex-1 rounded-lg border border-slate-300 px-4 py-2.5 text-slate-900 outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-100"
           />
-          <select
+          <select aria-label="Category" name="category"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
             className="rounded-lg border border-slate-300 px-3 py-2.5 text-slate-700 outline-none focus:border-teal-500"

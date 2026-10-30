@@ -1,0 +1,4 @@
+Contact: mailto:contact@phaiworks.com
+Expires: 2027-10-30T00:00:00.000Z
+Preferred-Languages: ja, en
+Canonical: https://rag-demo.phaiworks.com/.well-known/security.txt

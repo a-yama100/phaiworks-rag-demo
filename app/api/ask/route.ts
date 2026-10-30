@@ -28,6 +28,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid request." }, { status: 400 });
   }
 
+  // 文字列以外（配列・オブジェクト）は受け付けない。
+  if (!body || typeof body !== "object" || (body.question !== undefined && typeof body.question !== "string")) {
+    return NextResponse.json({ error: "Invalid request." }, { status: 400 });
+  }
   const question = (body.question ?? "").trim();
   if (!question) {
     return NextResponse.json({ error: "Please enter a question." }, { status: 400 });

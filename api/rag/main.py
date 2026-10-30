@@ -10,8 +10,11 @@ from __future__ import annotations
 
 import hmac
 import os
+import threading
+import time
+from collections import deque
 
-from fastapi import Depends, FastAPI, Header, HTTPException
+from fastapi import Depends, FastAPI, Header, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
@@ -77,6 +80,51 @@ def require_api_key(x_api_key: str | None = Header(default=None)) -> None:
         raise HTTPException(status_code=401, detail="Invalid or missing API key")
 
 
+# 回数制限（このサーバー1台の記憶で数える）。Next.js の受け口（app/api/ask）でも数えているが、
+# この /api/py/ask は同じドメインで公開されているので、直接呼ばれると前段の制限を通らない。
+# 正しい X-API-Key が付いた呼び出し（前段の受け口から）は前段で数え済みなので、ここでは数えない。
+# BACKEND_API_KEY を設定していないときは、前段からの呼び出しも同じ IP にまとまるので、前段より広めにとる。
+RATE_WINDOW_SEC = 60
+RATE_MAX_PER_MINUTE = int(os.getenv("RATE_MAX_PER_MINUTE", "20"))
+RATE_MAX_PER_DAY = int(os.getenv("RATE_MAX_PER_DAY", "300"))
+_rate_lock = threading.Lock()
+_rate_hits: dict[str, deque[float]] = {}
+_rate_day: dict[str, tuple[float, int]] = {}
+
+
+def _client_ip(request: Request) -> str:
+    h = request.headers
+    return (
+        h.get("x-real-ip")
+        or (h.get("x-forwarded-for") or "").split(",")[0].strip()
+        or (request.client.host if request.client else "")
+        or "unknown"
+    )
+
+
+def rate_limit(request: Request, x_api_key: str | None = Header(default=None)) -> None:
+    expected = os.getenv("BACKEND_API_KEY")
+    if expected and x_api_key and hmac.compare_digest(x_api_key, expected):
+        return
+    ip = _client_ip(request)
+    now = time.time()
+    with _rate_lock:
+        recent = _rate_hits.setdefault(ip, deque())
+        while recent and now - recent[0] >= RATE_WINDOW_SEC:
+            recent.popleft()
+        day_start, day_count = _rate_day.get(ip, (now, 0))
+        if now - day_start >= 86_400:
+            day_start, day_count = now, 0
+        if len(recent) >= RATE_MAX_PER_MINUTE or day_count >= RATE_MAX_PER_DAY:
+            raise HTTPException(status_code=429, detail="Too many requests")
+        recent.append(now)
+        _rate_day[ip] = (day_start, day_count + 1)
+        if len(_rate_hits) > 5000:
+            for k in [k for k, v in _rate_hits.items() if not v and now - _rate_day.get(k, (0, 0))[0] >= 86_400]:
+                _rate_hits.pop(k, None)
+                _rate_day.pop(k, None)
+
+
 class AskRequest(BaseModel):
     question: str = Field(..., min_length=1, max_length=MAX_QUESTION_LEN)
     category: str | None = None
@@ -105,7 +153,7 @@ def meta() -> dict:
     }
 
 
-@app.post(f"{API_PREFIX}/ask", dependencies=[Depends(require_api_key)])
+@app.post(f"{API_PREFIX}/ask", dependencies=[Depends(require_api_key), Depends(rate_limit)])
 def ask_endpoint(req: AskRequest) -> dict:
     category = req.category if req.category in CATEGORIES else None
     if req.mode not in (None, "hybrid", "dense"):
