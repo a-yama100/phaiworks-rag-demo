@@ -10,7 +10,7 @@ export function Footer() {
         <p className="text-slate-400 text-sm">
           A portfolio engineering demo by{" "}
           <a
-            href="https://www.phaiworks.com/"
+            href="https://www.phaiworks.com/en"
             className="hover:text-slate-700 underline"
           >
             PH AI Works

@@ -75,11 +75,12 @@ export default function EvalsPage() {
     <div className="mx-auto max-w-4xl px-4 py-10">
       <h1 className="text-3xl font-bold text-slate-900">Evaluation</h1>
       <p className="mt-3 max-w-2xl text-slate-600">
-        Measured on a {r.gold_set_size}-case gold set. The headline figures are the
-        shipped configuration — dense retrieval — with hybrid shown alongside as the
-        comparison it lost. Out-of-scope cases are scored separately on refusal: a
-        pipeline tuned only for recall answers every question, including the ones it
-        should decline.
+        Tested on {r.gold_set_size} sample questions with known correct answers (a
+        &ldquo;gold set&rdquo;). The main figures are for the setup in use, dense
+        retrieval. Hybrid search, which scored lower, is shown beside them for
+        comparison. Out-of-scope questions are scored separately on whether they were
+        refused: a system tuned only to find answers will answer everything, even
+        questions it should decline.
       </p>
       <p className="mt-2 font-mono text-xs text-slate-400">
         {r.config.embed_model} · top_k={k} · min_score={r.config.min_score} · run{" "}
@@ -112,12 +113,12 @@ export default function EvalsPage() {
         <section className="mt-10 rounded-xl border border-teal-200 bg-teal-50/50 p-5">
           <h2 className="text-lg font-semibold text-slate-900">End to end, through the agent</h2>
           <p className="mt-1 max-w-3xl text-sm text-slate-600">
-            The retrieval threshold above refuses{" "}
-            {pct(dense.refusal_accuracy)} of out-of-scope questions. It cannot do better,
-            because the ones it lets through are squarely on topic — asking for a
-            diagnosis, a drug dose, a product recommendation. A cosine score has no way to
-            tell those apart from a legitimate question about the same biomarker. The
-            generation stage does, and catches all of them.
+            The score threshold alone refuses {pct(dense.refusal_accuracy)} of
+            out-of-scope questions. It can&apos;t do better, because the ones that get
+            through are clearly on topic: they ask for a diagnosis, a drug dose or a
+            product recommendation. A similarity score can&apos;t tell these apart from a
+            fair question about the same blood marker. The answer-writing step can, and
+            it catches all of them.
           </p>
           <div className="mt-4 grid gap-3 sm:grid-cols-3">
             {[
@@ -140,10 +141,11 @@ export default function EvalsPage() {
           {r.generation.notable && r.generation.notable.length > 0 && (
             <div className="mt-4">
               <p className="text-sm text-slate-600">
-                The in-scope cases it declined are all requests for a personal diagnosis.
-                The retrieval label is right — HbA1c <em>is</em> the brief for &ldquo;am I
-                prediabetic&rdquo; — but declining to diagnose is also right, so these are
-                counted as misses by a gold set that only labels retrieval:
+                The in-scope questions it declined all ask for a personal diagnosis. The
+                search found the right brief (HbA1c <em>is</em> the brief for &ldquo;am I
+                prediabetic&rdquo;), and declining to diagnose is also the right call.
+                They count as misses only because the gold set checks retrieval, not
+                answers:
               </p>
               <ul className="mt-2 space-y-1">
                 {r.generation.notable.map((n) => (
@@ -165,11 +167,12 @@ export default function EvalsPage() {
             Why hybrid retrieval was dropped
           </h2>
           <p className="mt-1 max-w-3xl text-sm text-slate-500">
-            Hybrid search is the standard recommendation and was the original design here.
-            Sweeping the weight BM25 carries in the fusion shows it never helps on this
-            corpus and degrades monotonically: BM25 latches onto a domain word many briefs
-            share — &ldquo;cholesterol&rdquo; — and floats all of them above the one that
-            answers the question. Kept in the code, off by default.
+            Hybrid search is the usual recommendation, and this demo was first built
+            with it. But testing different weights for the keyword part (BM25) showed it
+            never helped here: the more weight it got, the worse the results. BM25 locks
+            onto a word that many briefs share, such as &ldquo;cholesterol&rdquo;, and
+            pushes all of them above the one that answers the question. The code is still
+            there, but it is off by default.
           </p>
           <div className="mt-4 overflow-x-auto">
             <table className="w-full min-w-[28rem] text-sm">
@@ -207,9 +210,10 @@ export default function EvalsPage() {
       <section className="mt-10">
         <h2 className="text-lg font-semibold text-slate-900">By case type</h2>
         <p className="mt-1 text-sm text-slate-500">
-          Broken down by the failure each case type is designed to catch. The `exact`
-          row is the one that settled the hybrid question: keyword search exists to rescue
-          verbatim names, and dense retrieval already gets every one of them.
+          Results by question type. Each type is designed to catch a different kind of
+          failure. The <code className="font-mono text-xs">exact</code> row settled the
+          hybrid question: keyword search is meant to help with exact names, but dense
+          retrieval already finds every one of them.
         </p>
         <div className="mt-4 overflow-x-auto">
           <table className="w-full min-w-[32rem] text-sm">
@@ -243,9 +247,10 @@ export default function EvalsPage() {
         <section className="mt-10">
           <h2 className="text-lg font-semibold text-slate-900">Threshold sweep</h2>
           <p className="mt-1 text-sm text-slate-500">
-            Why min_score is {r.config.min_score} and not a rounder number. Raising it
-            refuses more out-of-scope questions and starts declining ones it could have
-            answered; the chosen value is the peak of the combined column.
+            Why min_score is {r.config.min_score} and not a rounder number. A higher
+            threshold refuses more out-of-scope questions, but it also starts declining
+            questions it could have answered. The chosen value gives the best combined
+            score.
           </p>
           <div className="mt-4 overflow-x-auto">
             <table className="w-full min-w-[32rem] text-sm">
@@ -293,8 +298,8 @@ export default function EvalsPage() {
             <span className="font-normal text-slate-400">({dense.failures.length})</span>
           </h2>
           <p className="mt-1 text-sm text-slate-500">
-            Published rather than trimmed. A gold set with no failures left has usually
-            been edited to match the system rather than the other way round.
+            Shown in full, not hidden. A test set with zero failures has usually been
+            edited to fit the system, not the other way round.
           </p>
           <ul className="mt-4 space-y-2">
             {dense.failures.map((f) => (

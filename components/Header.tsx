@@ -4,7 +4,7 @@ export function Header() {
       <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <a
-            href="https://www.phaiworks.com/"
+            href="https://www.phaiworks.com/en"
             className="font-bold text-slate-900 hover:text-teal-600 transition-colors"
           >
             PH AI Works
@@ -21,7 +21,7 @@ export function Header() {
             Evaluation
           </a>
           <a
-            href="https://www.phaiworks.com/"
+            href="https://www.phaiworks.com/en"
             className="hidden sm:inline text-slate-400 hover:text-slate-900 transition-colors"
           >
             phaiworks.com

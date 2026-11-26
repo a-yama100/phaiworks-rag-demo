@@ -17,22 +17,22 @@ const EXAMPLES: { label: string; question: string; note: string }[] = [
   {
     label: "exact name",
     question: "GGT",
-    note: "12/12 on exact names without any keyword search",
+    note: "all 12 exact-name tests pass without keyword search",
   },
   {
     label: "confusable",
     question: "the iron test that is not thrown off by inflammation",
-    note: "four iron briefs are plausible; only one is right",
+    note: "four iron briefs look relevant; only one is correct",
   },
   {
     label: "out of scope",
     question: "what dose of levothyroxine should I take",
-    note: "on topic enough to retrieve TSH, uncovered by it — declined at generation",
+    note: "finds the TSH brief, but it doesn't cover dosing, so the answer is declined",
   },
   {
     label: "off topic",
     question: "how do I fix a flat tyre",
-    note: "nothing clears the score threshold",
+    note: "no brief scores high enough, so nothing is returned",
   },
 ];
 
@@ -98,15 +98,25 @@ export default function Home() {
         <h1 className="text-3xl font-bold text-slate-900 sm:text-4xl">
           Clinical Knowledge Base — RAG Demo
         </h1>
-        <p className="mx-auto mt-3 max-w-2xl text-slate-600">
-          Retrieval over 52 schema-validated biomarker briefs, wrapped in a LangGraph
-          agent that rewrites and retries before it gives up. Every answer cites the
-          briefs it used, and those citations are checked against what was actually
-          retrieved — so the system can decline, and you can see why.
+        {/* eslint-disable-next-line @next/next/no-img-element -- 同じ origin の静的ファイル。next/image の最適化は使わない */}
+        <img
+          src="/media/hero.webp"
+          alt="Illustration of a clinical knowledge base: blood test tubes, a magnifying glass picking the one matching document, and a chat answer with verified source tags"
+          width={1600}
+          height={679}
+          className="mt-6 aspect-[1600/679] w-full rounded-xl object-cover"
+        />
+        <p className="mx-auto mt-6 max-w-2xl text-slate-600">
+          Ask a question about a blood test. The system searches 52 checked summaries of
+          blood markers (&ldquo;biomarker briefs&rdquo;). If the first search misses, a
+          LangGraph agent rewrites the question and tries again. Every answer lists the
+          briefs it used, and the system checks that each one really came from the
+          search. If it can&apos;t answer reliably, it says so and shows you why.
         </p>
         <p className="mx-auto mt-3 max-w-2xl text-sm text-slate-500">
-          Measured on a 60-case gold set: <strong>96%</strong> top-1 retrieval and{" "}
-          <strong>100%</strong> of out-of-scope questions refused, end to end.
+          Tested on 60 sample questions with known answers: the right brief came first{" "}
+          <strong>96%</strong> of the time, and <strong>100%</strong> of out-of-scope
+          questions were refused.
         </p>
         <p className="mt-3 text-sm">
           <Link href="/evals" className="text-teal-700 underline hover:text-teal-900">
@@ -170,7 +180,8 @@ export default function Home() {
             </button>
           ))}
           <span className="text-xs text-slate-400">
-            — hybrid scored worse here (90% vs 96%); switch and re-ask to see it happen
+            — hybrid scored lower in testing (90% vs 96%). Switch modes and ask again to
+            compare.
           </span>
         </div>
 
@@ -251,25 +262,26 @@ export default function Home() {
       <section className="mt-14 border-t border-slate-200 pt-8">
         <h2 className="text-lg font-semibold text-slate-900">How it is kept honest</h2>
         <p className="mt-1 text-sm text-slate-500">
-          The parts that usually break in a RAG knowledge base, and what stops them here.
+          The weak points of a typical RAG knowledge base, and how this demo handles each
+          one.
         </p>
         <ul className="mt-4 grid gap-3 sm:grid-cols-2">
           {[
             [
-              "One schema, enforced in code",
-              "Every brief is validated against a Pydantic schema with controlled vocabularies before it is embedded. An invalid brief fails ingest with its filename attached, rather than surfacing later as a confident wrong answer.",
+              "Every brief follows one checked format",
+              "Before a brief is added to the search index, code checks it against a fixed format (a Pydantic schema with set vocabularies). A brief with an error stops the import and names the file, instead of later producing a confident wrong answer.",
             ],
             [
-              "Hard metadata filter, applied first",
-              "Unapproved, non-UK or off-category briefs are excluded before similarity runs, on both the vector and keyword sides. They are not outranked — they are never candidates.",
+              "Filters run before the search",
+              "Briefs that are unapproved, not UK-based or in the wrong category are removed before any similarity search, on both the vector and keyword side. They are never candidates at all.",
             ],
             [
               "Citations checked, not trusted",
-              "The model must cite the source_brief_id of everything it used. Any id that was not in the retrieval result means the answer is discarded — a hallucination becomes a detectable event.",
+              "The model must list the ID (source_brief_id) of every brief it used. If it cites an ID that the search did not return, the answer is thrown away, so a made-up source becomes an error you can detect.",
             ],
             [
-              "Refusal is a first-class outcome",
-              "A score threshold and an explicit 'the briefs do not cover this' path mean the system declines. The eval scores that behaviour separately, because a system measured only on recall answers everything.",
+              "Declining to answer is a valid result",
+              "A minimum score and an explicit \"the briefs don't cover this\" option let the system decline. The evaluation scores refusals separately, because a system judged only on finding answers will try to answer everything.",
             ],
           ].map(([title, body]) => (
             <li key={title} className="rounded-lg border border-slate-200 bg-white p-4">
@@ -281,8 +293,15 @@ export default function Home() {
         <p className="mt-6 text-sm text-slate-500">
           Stack: Next.js proxy (no provider keys) · FastAPI · LangChain retrieval ·
           LangGraph agent · Pinecone serverless · Gemini embeddings and generation,
-          swappable for OpenAI or Anthropic by config. Source and the full write-up are
-          in the repository.
+          swappable for OpenAI or Anthropic by config. The source code and a full
+          write-up are on{" "}
+          <a
+            href="https://github.com/a-yama100/phaiworks-rag-demo"
+            className="text-teal-700 underline hover:text-teal-900"
+          >
+            GitHub
+          </a>
+          .
         </p>
       </section>
     </div>
