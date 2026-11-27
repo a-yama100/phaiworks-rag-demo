@@ -192,11 +192,12 @@ export function EvalsPage({ lang }: { lang: Lang }) {
           ) : (
             <p className="mt-1 max-w-3xl text-sm text-slate-600">
               The score threshold alone refuses {pct(dense.refusal_accuracy)} of
-              out-of-scope questions. It can&apos;t do better, because the ones that get
-              through are clearly on topic: they ask for a diagnosis, a drug dose or a
-              product recommendation. A similarity score can&apos;t tell these apart from a
-              fair question about the same blood marker. The answer-writing step can, and
-              it catches all of them.
+              out-of-scope questions. A higher threshold refuses more of them, but it
+              also starts declining questions it should answer (see the threshold sweep
+              below). The ones that get through are clearly on topic: they ask for a
+              diagnosis, a drug dose or a product recommendation. A similarity score
+              can&apos;t tell these apart from a fair question about the same blood marker.
+              The answer-writing step can, and in this test it declined all of them.
             </p>
           )}
           <div className="mt-4 grid gap-3 sm:grid-cols-3">

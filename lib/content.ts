@@ -43,9 +43,9 @@ export const META: Record<Lang, { siteName: string } & Record<PageKey, { title: 
     home: {
       title: "Clinical Knowledge Base — RAG Demo",
       description:
-        "Hybrid retrieval (Pinecone + BM25) over schema-validated biomarker briefs, wrapped in a LangGraph agent with citation-enforced generation, a visible trace, and published eval numbers.",
+        "Dense vector retrieval (Pinecone) over schema-validated biomarker briefs, wrapped in a LangGraph agent that rewrites and retries, checks every citation against what was retrieved, and shows its trace. Includes published eval numbers comparing dense and hybrid (dense + BM25) retrieval.",
       ogDescription:
-        "Hybrid retrieval, a LangGraph rewrite-and-retry agent, and answers whose citations are checked against what was retrieved. Eval numbers published.",
+        "Dense vector retrieval, a LangGraph rewrite-and-retry agent, and answers whose citations are checked against what was retrieved. Eval numbers published.",
     },
     evals: {
       title: "Evaluation — Clinical Knowledge Base RAG Demo",
