@@ -106,7 +106,7 @@ export default function Home() {
           height={679}
           className="mt-6 aspect-[1600/679] w-full rounded-xl object-cover"
         />
-        <p className="mx-auto mt-6 max-w-2xl text-slate-600">
+        <p className="mt-6 text-slate-600">
           Ask a question about a blood test. The system searches 52 checked summaries of
           blood markers (&ldquo;biomarker briefs&rdquo;). If the first search misses, a
           LangGraph agent rewrites the question and tries again. Every answer lists the
