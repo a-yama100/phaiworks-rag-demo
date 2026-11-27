@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { Match } from "@/lib/types";
+import { CATEGORY_LABELS_JA, type Lang } from "@/lib/content";
 
 // Which retriever found a document, and where each ranked it. This is the difference
 // between "the search works" and being able to say why a particular brief came back
@@ -27,7 +28,16 @@ function RetrieverTags({ match }: { match: Match }) {
   );
 }
 
-export function MatchList({ matches, citations }: { matches: Match[]; citations: string[] }) {
+export function MatchList({
+  matches,
+  citations,
+  lang,
+}: {
+  matches: Match[];
+  citations: string[];
+  lang: Lang;
+}) {
+  const ja = lang === "ja";
   const [expanded, setExpanded] = useState<string | null>(null);
 
   if (matches.length === 0) return null;
@@ -35,9 +45,11 @@ export function MatchList({ matches, citations }: { matches: Match[]; citations:
   return (
     <div className="space-y-2">
       <h3 className="text-sm font-semibold text-slate-900">
-        Retrieved briefs{" "}
+        {ja ? "検索で見つかった資料" : "Retrieved briefs"}{" "}
         <span className="font-normal text-slate-400">
-          — {matches.length} candidate{matches.length === 1 ? "" : "s"} passed to the model
+          {ja
+            ? `— モデルに渡した資料の候補 ${matches.length}件`
+            : `— ${matches.length} candidate${matches.length === 1 ? "" : "s"} passed to the model`}
         </span>
       </h3>
       {matches.map((m) => {
@@ -58,11 +70,11 @@ export function MatchList({ matches, citations }: { matches: Match[]; citations:
               <div className="flex flex-wrap items-center gap-2">
                 <span className="font-medium text-slate-900">{m.biomarker}</span>
                 <span className="rounded bg-slate-100 px-1.5 py-0.5 text-[11px] text-slate-500">
-                  {m.category}
+                  {ja ? CATEGORY_LABELS_JA[m.category] ?? m.category : m.category}
                 </span>
                 {cited && (
                   <span className="rounded bg-teal-600 px-1.5 py-0.5 text-[11px] font-medium text-white">
-                    cited
+                    {ja ? "引用" : "cited"}
                   </span>
                 )}
               </div>

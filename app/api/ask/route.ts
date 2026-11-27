@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { rateLimit } from "@/lib/ratelimit";
 import { BACKEND_PREFIX, BACKEND_URL, CATEGORIES, MAX_QUESTION_LEN } from "@/lib/config";
+import { API_ERRORS, asLang } from "@/lib/content";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -12,35 +13,31 @@ export const dynamic = "force-dynamic";
 
 const TIMEOUT_MS = 30_000;
 
+// ?lang=ja|en は誤りの文の言語だけに使う。回答の言語は Python の側（rag/generate.py の指示）で英語に固定されている。
 export async function POST(req: NextRequest) {
+  const msg = API_ERRORS[asLang(req.nextUrl.searchParams.get("lang"))];
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
   if (!rateLimit(ip).ok) {
-    return NextResponse.json(
-      { error: "Too many requests. Please slow down and try again shortly." },
-      { status: 429 }
-    );
+    return NextResponse.json({ error: msg.tooMany }, { status: 429 });
   }
 
   let body: { question?: string; category?: string; mode?: string };
   try {
     body = await req.json();
   } catch {
-    return NextResponse.json({ error: "Invalid request." }, { status: 400 });
+    return NextResponse.json({ error: msg.invalid }, { status: 400 });
   }
 
   // 文字列以外（配列・オブジェクト）は受け付けない。
   if (!body || typeof body !== "object" || (body.question !== undefined && typeof body.question !== "string")) {
-    return NextResponse.json({ error: "Invalid request." }, { status: 400 });
+    return NextResponse.json({ error: msg.invalid }, { status: 400 });
   }
   const question = (body.question ?? "").trim();
   if (!question) {
-    return NextResponse.json({ error: "Please enter a question." }, { status: 400 });
+    return NextResponse.json({ error: msg.empty }, { status: 400 });
   }
   if (question.length > MAX_QUESTION_LEN) {
-    return NextResponse.json(
-      { error: `Question too long (max ${MAX_QUESTION_LEN} characters).` },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: msg.tooLong(MAX_QUESTION_LEN) }, { status: 400 });
   }
 
   const category =
@@ -71,7 +68,7 @@ export async function POST(req: NextRequest) {
       // generic one — a deployment detail is not something to show a visitor.
       console.error("backend error", res.status, await res.text().catch(() => ""));
       return NextResponse.json(
-        { error: "The retrieval service is unavailable. Please try again shortly." },
+        { error: msg.unavailable },
         { status: 502 }
       );
     }
@@ -83,8 +80,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       {
         error: aborted
-          ? "The request took too long. Please try again."
-          : "Could not reach the retrieval service.",
+          ? msg.timeout
+          : msg.unreachable,
       },
       { status: aborted ? 504 : 502 }
     );
